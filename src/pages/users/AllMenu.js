@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
-import CardAllCoffee from './cardsProducts/CardAllCoffee';
-import CardCoffee from './cardsProducts/CardCoffe';
-import './css/style.css';
-import { useQuery } from 'react-query';
-import { getProducts, getTypeCoffee } from '../../config/api';
-import loading from '../../assets/img/loading.gif';
-import ModalNotAvailable from '../guest/components/ModalNotAvailable';
+import React, { useState } from "react";
+import CardAllCoffee from "./cardsProducts/CardAllCoffee";
+import CardCoffee from "./cardsProducts/CardCoffe";
+import "./css/style.css";
+import { useQuery } from "react-query";
+import { getProducts, getTypeCoffee } from "../../config/api";
+import loading from "../../assets/img/loading.gif";
+import ModalNotAvailable from "../guest/components/ModalNotAvailable";
 
 const AllMenu = () => {
-  const { data: products, isLoading, error } = useQuery('productsCache', getProducts);
-  const { data: typeCoffee, isLoading: loadTypeCoffee, error: errorTypeCoffee } = useQuery('typeCoffeeCache', getTypeCoffee);
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery("productsCache", getProducts);
+  const {
+    data: typeCoffee,
+    isLoading: loadTypeCoffee,
+    error: errorTypeCoffee,
+  } = useQuery("typeCoffeeCache", getTypeCoffee);
   const [renderCoffee, setRenderCoffee] = useState(true);
-  const [title, setTitle] = useState('All Menu');
+  const [title, setTitle] = useState("All Menu");
 
   if (isLoading || loadTypeCoffee) {
     return (
@@ -31,38 +39,50 @@ const AllMenu = () => {
           <div class="title d-flex justify-content-between mb-3">
             <h3>{title}</h3>
             <div class="dropdown">
-              <button class="btn-sort-by dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <button
+                class="btn-sort-by dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Sort By
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
-                  <a
+                  <div
                     class="dropdown-item"
-                    href="#"
                     onClick={() => {
-                      setTitle('All Menu');
+                      setTitle("All Menu");
                       setRenderCoffee(true);
                     }}
                   >
                     All Menu
-                  </a>
+                  </div>
                 </li>
                 <li>
-                  <a
+                  <div
                     class="dropdown-item"
-                    href="#"
                     onClick={() => {
-                      setTitle('Coffee Variant');
+                      setTitle("Coffee Variant");
                       setRenderCoffee(false);
                     }}
                   >
                     Coffee Variant
-                  </a>
+                  </div>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="row">{renderCoffee ? products?.map((data) => <CardAllCoffee coffee={data} key={data.id} />) : typeCoffee?.map((data) => <CardCoffee coffee={data} key={data.id} />)}</div>
+          <div className="row">
+            {renderCoffee
+              ? products?.map((data) => (
+                  <CardAllCoffee coffee={data} key={data.id} />
+                ))
+              : typeCoffee?.map((data) => (
+                  <CardCoffee coffee={data} key={data.id} />
+                ))}
+          </div>
         </div>
       </section>
       <ModalNotAvailable />

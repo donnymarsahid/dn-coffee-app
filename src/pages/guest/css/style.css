@@ -33,7 +33,7 @@ nav .container-navbar .navbar-link ul li {
   letter-spacing: 1px;
 }
 nav .container-navbar .navbar-link ul li::after {
-  content: '';
+  content: "";
   background-color: var(--primaryColor);
   height: 3px;
   width: 0;
@@ -93,7 +93,7 @@ nav .navbar-link ul li.menu:hover .box {
 
 nav .navbar-link ul li.store .box p::after,
 nav .navbar-link ul li.menu .box p::after {
-  content: '';
+  content: "";
   display: block;
   background-color: #d14545;
   width: 0;
@@ -127,7 +127,7 @@ header .container {
 header .container .jumbotron {
   width: 90%;
   height: 100%;
-  background-image: url('../../../assets/img/bg-waysbucks.png');
+  background-image: url("../../../assets/img/bg-waysbucks.png");
   background-size: cover;
   border-radius: 10px;
   padding: 90px 400px 80px 80px;
@@ -179,11 +179,26 @@ section.varian .container .row .col-md-3 .box-card img {
   cursor: pointer;
   position: relative;
 }
-section.varian .container .row .col-md-3 .box-card .image-card .whistlist button {
+section.varian
+  .container
+  .row
+  .col-md-3
+  .box-card
+  .image-card
+  .whistlist
+  button {
   border: none;
   background-color: transparent;
 }
-section.varian .container .row .col-md-3 .box-card .image-card .whistlist button.click-whistlist i {
+section.varian
+  .container
+  .row
+  .col-md-3
+  .box-card
+  .image-card
+  .whistlist
+  button.click-whistlist
+  i {
   font-weight: 600;
 }
 section.varian .container .row .col-md-3 .box-card .image-card .whistlist i {
@@ -404,7 +419,7 @@ section.about-store-page {
 }
 
 section.about-store-page .jumbotron {
-  background-image: url('../../../assets/img/jb-about-store.png');
+  background-image: url("../../../assets/img/jb-about-store.png");
   background-size: cover;
   height: 530px;
   margin-bottom: 180px;
@@ -484,3 +499,39 @@ section.about-store-page .content {
   font-size: 12px;
   margin: 0;
 }
+
+/* Page Reset Pass Start */
+.page-reset-password {
+  width: 50%;
+  height: 100vh;
+  margin: auto;
+}
+.page-reset-password form {
+  width: 50%;
+}
+.page-reset-password label {
+  font-weight: 600;
+  color: #3d3d3d;
+}
+.page-reset-password input {
+  width: 100%;
+  outline: none;
+  border: 1.5px solid var(--primaryColor);
+  background-color: #e0c8c840;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+.page-reset-password button {
+  background-color: var(--primaryColor);
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  width: 100%;
+  margin-top: 20px;
+}
+.page-reset-password button:hover {
+  background-color: #fa0202;
+}
+/* Page Reset Pass End */

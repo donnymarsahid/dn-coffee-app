@@ -42,6 +42,13 @@
   background-color: #d14545;
 }
 
+.access-login-register p.text-forget-pass {
+  font-weight: 600;
+  color: rgb(125, 125, 255);
+  letter-spacing: 0.8px;
+  cursor: pointer;
+}
+
 .access-login-register .box-access .click {
   color: black;
   font-weight: 500;

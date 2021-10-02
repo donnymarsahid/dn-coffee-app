@@ -1,6 +1,4 @@
-import React from 'react';
-import Login from '../access/Login';
-import Register from '../access/Register';
+import React from "react";
 
 const Contact = () => {
   return (
@@ -17,13 +15,15 @@ const Contact = () => {
         </div>
         <div class="telp d-flex flex-column border-lg">
           <i class="fab fa-whatsapp text-center"></i>
-          <a href="https://api.whatsapp.com/send?phone=6283872239021&text=Hallo%20Donny" class="ms-2" target="blank">
+          <a
+            href="https://api.whatsapp.com/send?phone=6283872239021&text=Hallo%20Donny"
+            class="ms-2"
+            target="blank"
+          >
             Click Here!
           </a>
         </div>
       </div>
-      <Login />
-      <Register />
     </>
   );
 };

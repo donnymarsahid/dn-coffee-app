@@ -1,34 +1,35 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from './pages/guest/components/Navbar';
-import NavbarUsers from './pages/users/components/Navbar';
-import './App.css';
-import Footer from './assets/components/Footer';
-import Guest from './pages/guest/Guest';
-import { useContext, useEffect } from 'react';
-import Users from './pages/users/Users';
-import AllMenu from './pages/guest/AllMenu';
-import AllMenuUsers from './pages/users/AllMenu';
-import ScrollToTop from './assets/components/ScrollToTop';
-import DetailPage from './pages/users/DetailPage';
-import CartPage from './pages/users/CartPage';
-import Profile from './pages/users/Profile';
-import AddProduct from './pages/admin/components/createData/AddProduct';
-import AddTopping from './pages/admin/components/createData/AddTopping';
-import IncomeTransaction from './pages/admin/IncomeTransaction';
-import Admin from './pages/admin/Admin';
-import NavbarAdmin from './pages/admin/components/NavbarAdmin';
-import NoMatch from './404/NoMatch';
-import { UserContext } from './context/userContext';
-import { API } from './config/api';
-import TableProduct from './pages/admin/components/tableData/TableProduct';
-import TableUser from './pages/admin/components/tableData/TableUser';
-import TableTopping from './pages/admin/components/tableData/TableTopping';
-import UpdateProduct from './pages/admin/components/updateData/UpdateProduct';
-import UpdateTopping from './pages/admin/components/updateData/UpdateTopping';
-import About from './pages/guest/About';
-import Transactions from './pages/users/Transactions';
-import ContactUsers from './pages/users/Contact';
-import Contact from './pages/users/Contact';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from "./pages/guest/components/Navbar";
+import NavbarUsers from "./pages/users/components/Navbar";
+import "./App.css";
+import Footer from "./assets/components/Footer";
+import Guest from "./pages/guest/Guest";
+import { useContext, useEffect } from "react";
+import Users from "./pages/users/Users";
+import AllMenu from "./pages/guest/AllMenu";
+import AllMenuUsers from "./pages/users/AllMenu";
+import ScrollToTop from "./assets/components/ScrollToTop";
+import DetailPage from "./pages/users/DetailPage";
+import CartPage from "./pages/users/CartPage";
+import Profile from "./pages/users/Profile";
+import AddProduct from "./pages/admin/components/createData/AddProduct";
+import AddTopping from "./pages/admin/components/createData/AddTopping";
+import IncomeTransaction from "./pages/admin/IncomeTransaction";
+import Admin from "./pages/admin/Admin";
+import NavbarAdmin from "./pages/admin/components/NavbarAdmin";
+import NoMatch from "./404/NoMatch";
+import { UserContext } from "./context/userContext";
+import { API } from "./config/api";
+import TableProduct from "./pages/admin/components/tableData/TableProduct";
+import TableUser from "./pages/admin/components/tableData/TableUser";
+import TableTopping from "./pages/admin/components/tableData/TableTopping";
+import UpdateProduct from "./pages/admin/components/updateData/UpdateProduct";
+import UpdateTopping from "./pages/admin/components/updateData/UpdateTopping";
+import About from "./pages/guest/About";
+import Transactions from "./pages/users/Transactions";
+import ContactUsers from "./pages/users/Contact";
+import Contact from "./pages/guest/Contact";
+import ResetPassword from "./pages/guest/ResetPassword";
 
 function App() {
   const [state, dispatch] = useContext(UserContext);
@@ -41,19 +42,19 @@ function App() {
         },
       };
 
-      const response = await API().get('/check-auth', config);
+      const response = await API().get("/check-auth", config);
 
       let payload = response.data.user;
       payload.token = localStorage.token;
 
-      if (response.status === 'failed') {
+      if (response.status === "failed") {
         return dispatch({
-          type: 'AUTH_ERROR',
+          type: "AUTH_ERROR",
         });
       }
 
       dispatch({
-        type: 'AUTH_SUCCESS',
+        type: "AUTH_SUCCESS",
         payload,
       });
     } catch (error) {
@@ -65,7 +66,7 @@ function App() {
     checkAuth();
   }, []);
 
-  if (state.user.status === 'user') {
+  if (state.user.status === "user") {
     return (
       <>
         <Router>
@@ -88,7 +89,7 @@ function App() {
     );
   }
 
-  if (state.user.status === 'admin') {
+  if (state.user.status === "admin") {
     return (
       <Router>
         <ScrollToTop />
@@ -103,7 +104,10 @@ function App() {
           <Route path="/admin/topping/add-topping" component={AddTopping} />
           <Route path="/admin/update-topping/:id" component={UpdateTopping} />
           <Route path="/admin/user" exact component={TableUser} />
-          <Route path="/admin/income-transaction" component={IncomeTransaction} />
+          <Route
+            path="/admin/income-transaction"
+            component={IncomeTransaction}
+          />
           <Route path="/*" component={NoMatch} />
         </Switch>
         <Footer />
@@ -114,12 +118,12 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <Navbar />
       <Switch>
         <Route path="/" exact component={Guest} />
         <Route path="/all-menu" component={AllMenu} />
         <Route path="/contact" component={Contact} />
         <Route path="/about" component={About} />
+        <Route path="/reset-password/:id" component={ResetPassword} />
         <Route path="/*" component={NoMatch} />
       </Switch>
       <Footer />
