@@ -65,6 +65,7 @@ const ResetPassword = () => {
         body: dataPassword,
       };
       const response = await API().put("/reset-password/" + id, config);
+    console.log(response);
 
       if (response.status === "success") {
         setMessage("Password changed successfully, please login");
@@ -76,10 +77,7 @@ const ResetPassword = () => {
   return (
     <div>
       <title>Reset Password</title>
-      <Navbar
-        handleShowLogin={handleShowLogin}
-        handleShowRegister={handleShowRegister}
-      />
+      <Navbar handleShowLogin={handleShowLogin} handleShowRegister={handleShowRegister} />
       <div className="page-reset-password d-flex justify-content-center align-items-center">
         <form onSubmit={(e) => handlerSubmit.mutate(e)}>
           {message && (
@@ -93,31 +91,14 @@ const ResetPassword = () => {
           <br />
           <label className="mt-3">Confirm New Password</label>
           <br />
-          <input
-            type="password"
-            name="confirmPassword"
-            onChange={handlerInput}
-          />
+          <input type="password" name="confirmPassword" onChange={handlerInput} />
           <br />
           <button type="submit">Reset Password</button>
         </form>
       </div>
-      <Login
-        showLogin={showLogin}
-        handleCloseLogin={handleCloseLogin}
-        handleShowRegister={handleShowRegister}
-        handleShowForgetPass={handleShowForgetPass}
-      />
-      <Register
-        showRegister={showRegister}
-        handleCloseRegister={handleCloseRegister}
-        handleShowLogin={handleShowLogin}
-      />
-      <ForgetPassword
-        showForgetPass={showForgetPass}
-        handleCloseForgetPass={handleCloseForgetPass}
-        handleShowLogin={handleShowLogin}
-      />
+      <Login showLogin={showLogin} handleCloseLogin={handleCloseLogin} handleShowRegister={handleShowRegister} handleShowForgetPass={handleShowForgetPass} />
+      <Register showRegister={showRegister} handleCloseRegister={handleCloseRegister} handleShowLogin={handleShowLogin} />
+      <ForgetPassword showForgetPass={showForgetPass} handleCloseForgetPass={handleCloseForgetPass} handleShowLogin={handleShowLogin} />
     </div>
   );
 };
