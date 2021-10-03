@@ -1,15 +1,4 @@
-const {
-  order,
-  transaction,
-  user,
-  toppingOrder,
-  topping,
-  product,
-  cart,
-} = require("../../models");
-
-const { v4: uuidv4 } = require("uuid");
-
+const { order, transaction, user, toppingOrder, topping, product, cart } = require("../../models");
 const midtransClient = require("midtrans-client");
 
 exports.getTransaction = async (req, res) => {
@@ -69,9 +58,13 @@ exports.getTransaction = async (req, res) => {
 exports.addTransaction = async (req, res) => {
   try {
     const idUser = req.user.id;
+    // const file = process.env.IMG_URL;
+    // const uploadFile = file + req.file.filename;
     const { name, email, total, phone, posCode, address } = req.body;
 
-    const newData = await transaction.create({
+    console.log(name + "  hello world");
+
+    const addTransaction = await transaction.create({
       idUser,
       name,
       email,
@@ -79,35 +72,40 @@ exports.addTransaction = async (req, res) => {
       phone,
       posCode,
       address,
-      attachment: "null",
       status: "pending",
+      attachment: "uploadFile",
     });
 
-    res.status(200).send({
-      status: "pending",
-      message: "Transaction status pending payment gateway zz",
-      email,
-      total,
+    const buyerData = await user.findOne({
+      where: {
+        id: idUser,
+      },
     });
 
-    // const file = process.env.IMG_URL;
-    // const uploadFile = file + req.file.filename;
-    // const { name, email, total, phone, posCode, address } = req.body;
+    const snap = new midtransClient.Snap({
+      isProduction: false,
+      serverKey: process.env.SERVER_KEY_MIDTRANS,
+    });
 
-    // const addTransaction = await transaction.create({
-    //   idUser,
-    //   name,
-    //   email,
-    //   total,
-    //   phone,
-    //   posCode,
-    //   address,
-    //   status: "waiting approve",
-    //   attachment: uploadFile,
-    // });
+    const parameter = {
+      transaction_details: {
+        order_id: addTransaction.id,
+        gross_amount: 25000,
+      },
+      credit_card: {
+        secure: true,
+      },
+      customer_details: {
+        first_name: buyerData?.fullname,
+        email: buyerData?.email,
+        phone: buyerData?.phone,
+      },
+    };
+
+    const payment = await snap.createTransaction(parameter);
 
     // const findOrder = await order.findAll();
-    // findOrder.map(async (data) => {
+    // const getIdOrder = findOrder.map(async (data) => {
     //   if (data.idTransaction === null) {
     //     const updateOrder = await order.update(
     //       { idTransaction: addTransaction.id },
@@ -123,12 +121,13 @@ exports.addTransaction = async (req, res) => {
 
     // const findCart = await cart.findAll();
     // const getIdCart = findCart.map((data) => data.id);
-    // await cart.destroy({ where: { id: getIdCart } });
+    // const deleteCart = await cart.destroy({ where: { id: getIdCart } });
 
-    // res.status(200).send({
-    //   status: "success",
-    //   id: addTransaction,
-    // });
+    res.status(200).send({
+      status: "pending",
+      message: "Transaction is proccess",
+      payment,
+    });
   } catch (error) {
     res.status(500).send({
       status: "failed",
@@ -283,28 +282,6 @@ exports.getDetailTransaction = async (req, res) => {
       status: "success",
       data: detailTransaction,
     });
-  } catch (error) {
-    res.status(500).send({
-      status: "failed",
-    });
-    console.log(error);
-  }
-};
-
-const core = new midtransClient.CoreApi({
-  isProduction: false,
-  serverKey: "SB-Mid-server-naYsbU46CdrttRgBYgEfICvg",
-  clientKey: "SB-Mid-client-VgmmM4o8ZbcepO2E",
-});
-
-exports.notification = async (req, res) => {
-  try {
-    const statusResponse = await core.transaction.notification(req.body);
-    const orderId = statusResponse.order_id;
-    const transactionStatus = statusResponse.transaction_id;
-    const fraudStatus = statusResponse.fraud_status;
-
-    console.log(statusResponse);
   } catch (error) {
     res.status(500).send({
       status: "failed",
