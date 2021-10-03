@@ -1,8 +1,10 @@
-const { user } = require('../../models');
-require('dotenv').config();
-const Joi = require('joi');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { user } = require("../../models");
+require("dotenv").config();
+const Joi = require("joi");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const sendResetLink = require("../sendEmail/sendEmail");
+const { v4: uuidv4 } = require("uuid");
 
 exports.register = async (req, res) => {
   const schema = Joi.object({
@@ -18,8 +20,8 @@ exports.register = async (req, res) => {
   });
   if (emailExists) {
     res.status(500).send({
-      status: 'failed',
-      message: 'email already exists',
+      status: "failed",
+      message: "email already exists",
     });
     return false;
   }
@@ -37,14 +39,14 @@ exports.register = async (req, res) => {
       fullname: req.body.fullname,
       email: req.body.email,
       password: hashingPassword,
-      status: 'user',
-      image: 'http://localhost:3001/images/profile.png',
+      status: "user",
+      image: "http://localhost:3001/images/profile.png",
     });
     const token = jwt.sign({ id: newUser.id, status: newUser.status }, process.env.JWT_SECRET, {
-      expiresIn: '24h',
+      expiresIn: "24h",
     });
     res.status(200).send({
-      status: 'success',
+      status: "success",
       data: {
         user: {
           fullname: newUser.fullname,
@@ -56,8 +58,8 @@ exports.register = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      status: 'failed',
-      message: 'server error',
+      status: "failed",
+      message: "server error",
     });
   }
 };
@@ -80,19 +82,19 @@ exports.login = async (req, res) => {
         email: req.body.email,
       },
       attributes: {
-        exclude: ['createdAt', 'updatedAt'],
+        exclude: ["createdAt", "updatedAt"],
       },
     });
     const isValid = await bcrypt.compare(req.body.password, userExist.password);
     if (!isValid) {
       return res.status(400).send({
-        status: 'failed',
-        message: 'email/password incorrect',
+        status: "failed",
+        message: "email/password incorrect",
       });
     }
     const token = jwt.sign({ id: userExist.id, status: userExist.status }, process.env.JWT_SECRET);
     res.status(200).send({
-      status: 'success',
+      status: "success",
       data: {
         user: {
           fullname: userExist.fullname,
@@ -105,8 +107,8 @@ exports.login = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      status: 'failed',
-      message: 'email/password incorrect',
+      status: "failed",
+      message: "email/password incorrect",
     });
   }
 };
@@ -119,18 +121,18 @@ exports.checkAuth = async (req, res) => {
         id,
       },
       attributes: {
-        exclude: ['createdAt', 'updatedAt', 'password'],
+        exclude: ["createdAt", "updatedAt", "password"],
       },
     });
 
     if (!dataUser) {
       return res.status(404).send({
-        status: 'failed',
+        status: "failed",
       });
     }
 
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         user: {
           id: dataUser.id,
@@ -143,8 +145,77 @@ exports.checkAuth = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
+  }
+};
+
+// Forget Password
+exports.forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const thisUser = await user.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (thisUser) {
+      const id = uuidv4();
+      await user.update(
+        { resetLink: id },
+        {
+          where: {
+            email,
+          },
+        }
+      );
+      const link = `To reset your password, please click on this link: http://localhost:3000/reset-password/${id}`;
+      await sendResetLink(thisUser.email, "Reset Password Instructions", link);
+    } else {
+      res.status(500).send({
+        status: "failed",
+        message: "email is not registered",
+      });
+    }
+
+    res.status(200).send({
+      status: "success",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "failed",
+    });
+    console.log(error);
+  }
+};
+
+// reset password
+exports.resetPassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password } = req.body;
+
+    const saltRounds = await bcrypt.genSalt(10);
+    const hashingPassword = await bcrypt.hash(password, saltRounds);
+
+    await user.update(
+      { password: hashingPassword },
+      {
+        where: {
+          resetLink: id,
+        },
+      }
+    );
+
+    res.status(200).send({
+      status: "success",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "failed",
+    });
+    console.log(error);
   }
 };

@@ -1,42 +1,42 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     static associate(models) {
       user.hasMany(models.transaction, {
-        as: 'transactions',
+        as: "transactions",
         foreignKey: {
-          name: 'idUser',
+          name: "idUser",
         },
       });
       user.hasMany(models.cart, {
-        as: 'carts',
+        as: "carts",
         foreignKey: {
-          name: 'idUser',
+          name: "idUser",
         },
       });
       user.hasMany(models.topping, {
-        as: 'toppings',
+        as: "toppings",
         foreignKey: {
-          name: 'idUser',
+          name: "idUser",
         },
       });
       user.hasMany(models.product, {
-        as: 'products',
+        as: "products",
         foreignKey: {
-          name: 'idUser',
+          name: "idUser",
         },
       });
       user.hasMany(models.chat, {
-        as: 'senderMessage',
+        as: "senderMessage",
         foreignKey: {
-          name: 'idSender',
+          name: "idSender",
         },
       });
       user.hasMany(models.chat, {
-        as: 'recipientMessage',
+        as: "recipientMessage",
         foreignKey: {
-          name: 'idRecipient',
+          name: "idRecipient",
         },
       });
     }
@@ -56,10 +56,11 @@ module.exports = (sequelize, DataTypes) => {
       posCode: DataTypes.STRING,
       address: DataTypes.STRING,
       status: DataTypes.STRING,
+      resetLink: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: 'user',
+      modelName: "user",
     }
   );
   return user;

@@ -79,46 +79,15 @@ exports.addTransaction = async (req, res) => {
       phone,
       posCode,
       address,
+      attachment: "null",
       status: "pending",
     });
-
-    const buyerData = await user.findOne({
-      where: {
-        id: idUser,
-      },
-      attributes: {
-        exclude: ["createdAt", "updatedAt", "password"],
-      },
-    });
-
-    const snap = new midtransClient.Snap({
-      isProduction: false,
-      serverKey: "SB-Mid-server-naYsbU46CdrttRgBYgEfICvg",
-    });
-
-    console.log(process.env.SERVER_KEY_MIDTRANS);
-    console.log(newData.total + "testerrrr");
-
-    const parameter = {
-      transaction_details: {
-        order_id: newData.id,
-        gross_amount: 30000,
-      },
-      credit_card: {
-        secure: true,
-      },
-      customer_details: {
-        first_name: buyerData?.name,
-        email: buyerData?.email,
-      },
-    };
-
-    const payment = await snap.createTransaction(parameter);
 
     res.status(200).send({
       status: "pending",
-      message: "Transaction status pending payment gateway",
-      payment,
+      message: "Transaction status pending payment gateway zz",
+      email,
+      total,
     });
 
     // const file = process.env.IMG_URL;
