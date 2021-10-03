@@ -1,38 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
-import { API, getCarts, getUser } from '../../config/api';
-import convertRupiah from 'rupiah-format';
-import { Modal } from 'react-bootstrap';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import trash from '../../assets/img/trash.svg';
-import load from '../../assets/img/load.gif';
-import loading from '../../assets/img/loading.gif';
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { API, getCarts, getUser } from "../../config/api";
+import convertRupiah from "rupiah-format";
+import { Modal } from "react-bootstrap";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+import trash from "../../assets/img/trash.svg";
+import load from "../../assets/img/load.gif";
+import loading from "../../assets/img/loading.gif";
 
 const CartPage = () => {
   const history = useHistory();
 
-  const { data: userId, isLoading } = useQuery('getUserIdCache', getUser);
+  const { data: userId, isLoading } = useQuery("getUserIdCache", getUser);
 
   const [idDelete, setIdDelete] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [show, setShow] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [order, setOrder] = useState(<img src={load} alt="load" width="50px" />);
 
   const [showOrder, setShowOrder] = useState(false);
   const handleCloseOrder = () => {
-    history.push('/profile');
+    history.push("/profile");
     window.location.reload();
   };
+
+  useEffect(() => {
+    const midtransScriptURL = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransClientKey = "SB-Mid-client-VgmmM4o8ZbcepO2E";
+    const scriptTag = document.createElement("script");
+
+    scriptTag.src = midtransScriptURL;
+    scriptTag.setAttribute("data-client-key", midtransClientKey);
+    document.body.appendChild(scriptTag);
+    return () => {
+      document.body.removeChild(scriptTag);
+    };
+  }, []);
+
   const handleShowOrder = () => {
     setShowOrder(true);
     setTimeout(() => {
-      setOrder('Thank you for ordering in us, please wait to verify you order');
+      setOrder("Thank you for ordering in us, please wait to verify you order");
     }, 2000);
   };
 
-  const { data: carts, refetch } = useQuery('getCartsCache', getCarts);
+  const { data: carts, refetch } = useQuery("getCartsCache", getCarts);
 
   console.log(order);
 
@@ -42,7 +56,7 @@ const CartPage = () => {
     phone: userId?.phone,
     posCode: userId?.posCode,
     address: userId?.address,
-    image: '',
+    image: "",
   });
 
   const { name, email, phone, posCode, address, image } = form;
@@ -65,12 +79,12 @@ const CartPage = () => {
   const deleteById = useMutation(async (id) => {
     try {
       const config = {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          Authorization: 'Bearer ' + localStorage.token,
+          Authorization: "Bearer " + localStorage.token,
         },
       };
-      await API().delete('/cart/' + id, config);
+      await API().delete("/cart/" + id, config);
       refetch();
     } catch (error) {
       console.log(error);
@@ -88,7 +102,7 @@ const CartPage = () => {
       setConfirmDelete(null);
     }
   }, [confirmDelete, deleteById, idDelete]);
-  const [fileUpload, setFileUpload] = useState('/images/upload-file.svg');
+  const [fileUpload, setFileUpload] = useState("/images/upload-file.svg");
 
   const array = [];
 
@@ -169,7 +183,7 @@ const CartPage = () => {
 
   const handlerFile = (e) => {
     setForm({ ...form, [e.target.name]: e.target.files[0] });
-    if (e.target.type === 'file') {
+    if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
       setTimeout(() => {
         setFileUpload(url);
@@ -206,35 +220,61 @@ const CartPage = () => {
   const handlerSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (fileUpload === '/images/upload-file.svg') {
-        setMessage('select your attachment');
-        setTimeout(() => {
-          setMessage('');
-        }, 3000);
-        return false;
-      }
+      // if (fileUpload === "/images/upload-file.svg") {
+      //   setMessage("select your attachment");
+      //   setTimeout(() => {
+      //     setMessage("");
+      //   }, 3000);
+      //   return false;
+      // }
       const formData = new FormData();
-      formData.set('name', name);
-      formData.set('email', email);
-      formData.set('phone', phone);
-      formData.set('posCode', posCode);
-      formData.set('address', address);
-      formData.set('total', totalPriceAll);
-      formData.set('image', image);
+      formData.set("name", name);
+      formData.set("email", email);
+      formData.set("phone", phone);
+      formData.set("posCode", posCode);
+      formData.set("address", address);
+      formData.set("total", totalPriceAll);
+      // formData.set("image", image);
 
       const config = {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Authorization: 'Bearer ' + localStorage.token,
+          Authorization: "Bearer " + localStorage.token,
         },
         body: formData,
       };
 
-      const response = await API().post('/transaction', config);
+      const response = await API().post("/transaction", config);
 
-      if (response.status === 'success') {
-        handleShowOrder();
-      }
+      console.log(response);
+
+      const token = response.payment.token;
+
+      window.snap.pay(token, {
+        onSuccess: function (result) {
+          /* You may add your own implementation here */
+          alert("payment success!");
+          console.log(result);
+        },
+        onPending: function (result) {
+          /* You may add your own implementation here */
+          alert("wating your payment!");
+          console.log(result);
+        },
+        onError: function (result) {
+          /* You may add your own implementation here */
+          alert("payment failed!");
+          console.log(result);
+        },
+        onClose: function () {
+          /* You may add your own implementation here */
+          alert("you closed the popup without finishing the payment");
+        },
+      });
+
+      // if (response.status === "success") {
+      //   handleShowOrder();
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -285,10 +325,39 @@ const CartPage = () => {
                     {message}
                   </div>
                 )}
-                <input type="text" name="name" id="name" placeHolder="Name" defaultValue={userId.fullname} className="mb-4" required onChange={handlerInput} autoComplete="off" />
-                <input type="email" name="email" id="email" placeHolder="Email" defaultValue={userId.email} className="mb-4" required onChange={handlerInput} autoComplete="off" />
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeHolder="Name"
+                  defaultValue={userId.fullname}
+                  className="mb-4"
+                  required
+                  onChange={handlerInput}
+                  autoComplete="off"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeHolder="Email"
+                  defaultValue={userId.email}
+                  className="mb-4"
+                  required
+                  onChange={handlerInput}
+                  autoComplete="off"
+                />
                 <input type="number" name="phone" id="phone" placeHolder="Phone" defaultValue={userId.phone} className="mb-4" required onChange={handlerInput} />
-                <input type="number" name="posCode" id="postcode" placeHolder="Pos Code" defaultValue={userId.posCode} className="mb-4" required onChange={handlerInput} />
+                <input
+                  type="number"
+                  name="posCode"
+                  id="postcode"
+                  placeHolder="Pos Code"
+                  defaultValue={userId.posCode}
+                  className="mb-4"
+                  required
+                  onChange={handlerInput}
+                />
                 <textarea name="address" id="address" cols="30" rows="10" placeHolder="Address" defaultValue={userId.address} onChange={handlerInput}></textarea>
                 <button type="submit" className="btn-pay">
                   Pay
@@ -315,7 +384,7 @@ const CartPage = () => {
       <Modal show={showOrder} centered onHide={handleCloseOrder} className="modal-order-success">
         <Modal.Body className="d-flex justify-content-center">{order}</Modal.Body>
         <Modal.Footer>
-          {order !== 'Thank you for ordering in us, please wait to verify you order' ? (
+          {order !== "Thank you for ordering in us, please wait to verify you order" ? (
             <>
               <button className="btn-order d-none"></button>
             </>
