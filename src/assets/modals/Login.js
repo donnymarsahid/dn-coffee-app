@@ -6,15 +6,11 @@ import { API } from "../../config/api";
 import { UserContext } from "../../context/userContext";
 import "./style.css";
 
-const Login = ({
-  showLogin,
-  handleCloseLogin,
-  handleShowRegister,
-  handleShowForgetPass,
-}) => {
+const Login = ({ showLogin, handleCloseLogin, handleShowRegister, handleShowForgetPass }) => {
   const history = useHistory();
   const [state, dispatch] = useContext(UserContext);
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState({
     email: "",
@@ -76,44 +72,20 @@ const Login = ({
               </div>
             )}
             <form onSubmit={(e) => handlerSubmit.mutate(e)}>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeHolder="Email"
-                className="mt-3 mb-3"
-                autoComplete="off"
-                required
-                onChange={handlerInput}
-              />
+              <input type="email" name="email" id="email" placeHolder="Email" className="mt-3 mb-3" autoComplete="off" required onChange={handlerInput} />
               <br />
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeHolder="Password"
-                className="mb-4"
-                autoComplete="off"
-                required
-                onChange={handlerInput}
-              />
+              <input type="password" name="password" id="password" placeHolder="Password" className="mb-4" autoComplete="off" required onChange={handlerInput} />
+              <i class="fas fa-eye-slash"></i>
               <br />
               <button type="submit">Login</button>
             </form>
             <p className="text-center mt-3 d-flex justify-content-center">
               Don't have an account ? click
-              <p
-                className="ps-1 click m-0 text-decoration-underline"
-                style={{ cursor: "pointer" }}
-                onClick={handleShowRegister}
-              >
+              <p className="ps-1 click m-0 text-decoration-underline" style={{ cursor: "pointer" }} onClick={handleShowRegister}>
                 here
               </p>
             </p>
-            <p
-              className="text-center mt-3 d-flex justify-content-center text-forget-pass"
-              onClick={handleShowForgetPass}
-            >
+            <p className="text-center mt-3 d-flex justify-content-center text-forget-pass" onClick={handleShowForgetPass}>
               Forget Password?
             </p>
           </div>

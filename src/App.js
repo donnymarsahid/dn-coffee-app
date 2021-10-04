@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./pages/guest/components/Navbar";
 import NavbarUsers from "./pages/users/components/Navbar";
 import "./App.css";
 import Footer from "./assets/components/Footer";
@@ -26,6 +25,7 @@ import TableTopping from "./pages/admin/components/tableData/TableTopping";
 import UpdateProduct from "./pages/admin/components/updateData/UpdateProduct";
 import UpdateTopping from "./pages/admin/components/updateData/UpdateTopping";
 import About from "./pages/guest/About";
+import AboutUsers from "./pages/users/About";
 import Transactions from "./pages/users/Transactions";
 import ContactUsers from "./pages/users/Contact";
 import Contact from "./pages/guest/Contact";
@@ -79,7 +79,7 @@ function App() {
             <Route path="/detail-page/:id" component={DetailPage} />
             <Route path="/cart-page" component={CartPage} />
             <Route path="/profile" component={Profile} />
-            <Route path="/about" component={About} />
+            <Route path="/about" component={AboutUsers} />
             <Route path="/all-transaction" component={Transactions} />
             <Route path="/*" component={NoMatch} />
           </Switch>
@@ -104,10 +104,7 @@ function App() {
           <Route path="/admin/topping/add-topping" component={AddTopping} />
           <Route path="/admin/update-topping/:id" component={UpdateTopping} />
           <Route path="/admin/user" exact component={TableUser} />
-          <Route
-            path="/admin/income-transaction"
-            component={IncomeTransaction}
-          />
+          <Route path="/admin/income-transaction" component={IncomeTransaction} />
           <Route path="/*" component={NoMatch} />
         </Switch>
         <Footer />

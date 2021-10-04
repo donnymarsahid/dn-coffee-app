@@ -242,28 +242,22 @@ const CartPage = () => {
 
       const response = await API().post("/transaction", config);
 
-      console.log(response);
-
       const token = response.payment.token;
 
       window.snap.pay(token, {
         onSuccess: function (result) {
-          /* You may add your own implementation here */
-          alert("payment success!");
+          history.push("/profile");
           console.log(result);
         },
         onPending: function (result) {
-          /* You may add your own implementation here */
           alert("wating your payment!");
           console.log(result);
         },
         onError: function (result) {
-          /* You may add your own implementation here */
           alert("payment failed!");
           console.log(result);
         },
         onClose: function () {
-          /* You may add your own implementation here */
           alert("you closed the popup without finishing the payment");
         },
       });
