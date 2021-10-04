@@ -255,24 +255,24 @@ exports.addTransaction = async (req, res) => {
 
     const payment = await snap.createTransaction(parameter);
 
-    // const findOrder = await order.findAll();
-    // const getIdOrder = findOrder.map(async (data) => {
-    //   if (data.idTransaction === null) {
-    //     const updateOrder = await order.update(
-    //       { idTransaction: addTransaction.id },
-    //       {
-    //         where: {
-    //           id: data.id,
-    //           idTransaction: null,
-    //         },
-    //       }
-    //     );
-    //   }
-    // });
+    const findOrder = await order.findAll();
+    findOrder.map(async (data) => {
+      if (data.idTransaction === null) {
+        const updateOrder = await order.update(
+          { idTransaction: addTransaction.id },
+          {
+            where: {
+              id: data.id,
+              idTransaction: null,
+            },
+          }
+        );
+      }
+    });
 
-    // const findCart = await cart.findAll();
-    // const getIdCart = findCart.map((data) => data.id);
-    // const deleteCart = await cart.destroy({ where: { id: getIdCart } });
+    const findCart = await cart.findAll();
+    const getIdCart = findCart.map((data) => data.id);
+    await cart.destroy({ where: { id: getIdCart } });
 
     res.status(200).send({
       status: "pending",
@@ -297,13 +297,6 @@ core.apiConfig.set({
   serverKey: SERVER_KEY_MIDTRANS,
   clientKey: CLIENT_KEY_MIDTRANS,
 });
-
-/**
- *  Handle update transaction status after notification
- * from midtrans webhook
- * @param {string} status
- * @param {transactionId} transactionId
- */
 
 const handleTransaction = async (status, transactionId) => {
   await transaction.update(
@@ -330,14 +323,28 @@ exports.notification = async (req, res) => {
         handleTransaction("pending", orderId);
         res.status(200);
       } else if (fraudStatus == "accept") {
-        // updateProduct(orderId);
-        handleTransaction("success", orderId);
+        const findOrder = await order.findAll();
+        findOrder.map(async (data) => {
+          if (data.idTransaction === null) {
+            await order.update(
+              { idTransaction: orderId },
+              {
+                where: {
+                  id: data.id,
+                  idTransaction: null,
+                },
+              }
+            );
+          }
+        });
+
+        const findCart = await cart.findAll();
+        const getIdCart = findCart.map((data) => data.id);
+        await cart.destroy({ where: { id: getIdCart } });
+
+        handleTransaction("waiting approve", orderId);
         res.status(200);
       }
-    } else if (transactionStatus == "settlement") {
-      // updateProduct(orderId);
-      handleTransaction("success", orderId);
-      res.status(200);
     } else if (transactionStatus == "cancel" || transactionStatus == "deny" || transactionStatus == "expire") {
       handleTransaction("failed", orderId);
       res.status(200);
@@ -350,18 +357,3 @@ exports.notification = async (req, res) => {
     res.status(500);
   }
 };
-
-// const updateProduct = async (orderId) => {
-//   const transactionData = await transaction.findOne({
-//     where: {
-//       id: orderId,
-//     },
-//   });
-//   const productData = await product.findOne({
-//     where: {
-//       id: transactionData.idProduct,
-//     },
-//   });
-//   const qty = productData.qty - 1;
-//   await product.update({ qty }, { where: { id: productData.id } });
-// };
