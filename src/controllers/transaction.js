@@ -55,87 +55,6 @@ exports.getTransaction = async (req, res) => {
   }
 };
 
-exports.addTransaction = async (req, res) => {
-  try {
-    const idUser = req.user.id;
-    // const file = process.env.IMG_URL;
-    // const uploadFile = file + req.file.filename;
-    const { name, email, total, phone, posCode, address } = req.body;
-
-    console.log(name + "  hello world");
-
-    const addTransaction = await transaction.create({
-      idUser,
-      name,
-      email,
-      total,
-      phone,
-      posCode,
-      address,
-      status: "pending",
-      attachment: "uploadFile",
-    });
-
-    const buyerData = await user.findOne({
-      where: {
-        id: idUser,
-      },
-    });
-
-    const snap = new midtransClient.Snap({
-      isProduction: false,
-      serverKey: process.env.SERVER_KEY_MIDTRANS,
-    });
-
-    const parameter = {
-      transaction_details: {
-        order_id: addTransaction.id,
-        gross_amount: 25000,
-      },
-      credit_card: {
-        secure: true,
-      },
-      customer_details: {
-        first_name: buyerData?.fullname,
-        email: buyerData?.email,
-        phone: buyerData?.phone,
-      },
-    };
-
-    const payment = await snap.createTransaction(parameter);
-
-    // const findOrder = await order.findAll();
-    // const getIdOrder = findOrder.map(async (data) => {
-    //   if (data.idTransaction === null) {
-    //     const updateOrder = await order.update(
-    //       { idTransaction: addTransaction.id },
-    //       {
-    //         where: {
-    //           id: data.id,
-    //           idTransaction: null,
-    //         },
-    //       }
-    //     );
-    //   }
-    // });
-
-    // const findCart = await cart.findAll();
-    // const getIdCart = findCart.map((data) => data.id);
-    // const deleteCart = await cart.destroy({ where: { id: getIdCart } });
-
-    res.status(200).send({
-      status: "pending",
-      message: "Transaction is proccess",
-      payment,
-    });
-  } catch (error) {
-    res.status(500).send({
-      status: "failed",
-    });
-    console.log(error);
-  }
-};
-
 exports.getTransactions = async (req, res) => {
   try {
     const transactions = await transaction.findAll({
@@ -289,3 +208,160 @@ exports.getDetailTransaction = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.addTransaction = async (req, res) => {
+  try {
+    const idUser = req.user.id;
+    const { name, email, total, phone, posCode, address } = req.body;
+
+    const addTransaction = await transaction.create({
+      id: "wb-" + Math.random().toString().slice(3, 8),
+      idUser,
+      name,
+      email,
+      total,
+      phone,
+      posCode,
+      address,
+      status: "pending",
+      attachment: null,
+    });
+
+    const buyerData = await user.findOne({
+      where: {
+        id: idUser,
+      },
+    });
+
+    const snap = new midtransClient.Snap({
+      isProduction: false,
+      serverKey: process.env.SERVER_KEY_MIDTRANS,
+    });
+
+    const parameter = {
+      transaction_details: {
+        order_id: addTransaction.id,
+        gross_amount: addTransaction.total,
+      },
+      credit_card: {
+        secure: true,
+      },
+      customer_details: {
+        first_name: buyerData?.fullname,
+        email: buyerData?.email,
+        phone: buyerData?.phone,
+      },
+    };
+
+    const payment = await snap.createTransaction(parameter);
+
+    // const findOrder = await order.findAll();
+    // const getIdOrder = findOrder.map(async (data) => {
+    //   if (data.idTransaction === null) {
+    //     const updateOrder = await order.update(
+    //       { idTransaction: addTransaction.id },
+    //       {
+    //         where: {
+    //           id: data.id,
+    //           idTransaction: null,
+    //         },
+    //       }
+    //     );
+    //   }
+    // });
+
+    // const findCart = await cart.findAll();
+    // const getIdCart = findCart.map((data) => data.id);
+    // const deleteCart = await cart.destroy({ where: { id: getIdCart } });
+
+    res.status(200).send({
+      status: "pending",
+      message: "Transaction is proccess",
+      payment,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "failed",
+    });
+    console.log(error);
+  }
+};
+
+const CLIENT_KEY_MIDTRANS = process.env.CLIENT_KEY_MIDTRANS;
+const SERVER_KEY_MIDTRANS = process.env.SERVER_KEY_MIDTRANS;
+
+const core = new midtransClient.CoreApi();
+
+core.apiConfig.set({
+  isProduction: false,
+  serverKey: SERVER_KEY_MIDTRANS,
+  clientKey: CLIENT_KEY_MIDTRANS,
+});
+
+/**
+ *  Handle update transaction status after notification
+ * from midtrans webhook
+ * @param {string} status
+ * @param {transactionId} transactionId
+ */
+
+const handleTransaction = async (status, transactionId) => {
+  await transaction.update(
+    {
+      status,
+    },
+    {
+      where: {
+        id: transactionId,
+      },
+    }
+  );
+};
+
+exports.notification = async (req, res) => {
+  try {
+    const statusResponse = await core.transaction.notification(req.body);
+    const orderId = statusResponse.order_id;
+    const transactionStatus = statusResponse.transaction_status;
+    const fraudStatus = statusResponse.fraud_status;
+
+    if (transactionStatus == "capture") {
+      if (fraudStatus == "challenge") {
+        handleTransaction("pending", orderId);
+        res.status(200);
+      } else if (fraudStatus == "accept") {
+        // updateProduct(orderId);
+        handleTransaction("success", orderId);
+        res.status(200);
+      }
+    } else if (transactionStatus == "settlement") {
+      // updateProduct(orderId);
+      handleTransaction("success", orderId);
+      res.status(200);
+    } else if (transactionStatus == "cancel" || transactionStatus == "deny" || transactionStatus == "expire") {
+      handleTransaction("failed", orderId);
+      res.status(200);
+    } else if (transactionStatus == "pending") {
+      handleTransaction("pending", orderId);
+      res.status(200);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+  }
+};
+
+// const updateProduct = async (orderId) => {
+//   const transactionData = await transaction.findOne({
+//     where: {
+//       id: orderId,
+//     },
+//   });
+//   const productData = await product.findOne({
+//     where: {
+//       id: transactionData.idProduct,
+//     },
+//   });
+//   const qty = productData.qty - 1;
+//   await product.update({ qty }, { where: { id: productData.id } });
+// };

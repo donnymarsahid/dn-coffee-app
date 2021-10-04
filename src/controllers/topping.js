@@ -1,15 +1,15 @@
-const { topping } = require('../../models');
+const { topping } = require("../../models");
 
 exports.getToppings = async (req, res) => {
   try {
     const toppings = await topping.findAll({
-      order: [['createdAt', 'DESC']],
+      order: [["createdAt", "DESC"]],
       attributes: {
-        exclude: ['createdAt', 'updatedAt'],
+        exclude: ["createdAt", "updatedAt"],
       },
     });
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         toppings,
       },
@@ -17,8 +17,8 @@ exports.getToppings = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -33,7 +33,7 @@ exports.detailTopping = async (req, res) => {
     });
     const { id, title, price, image } = findTopping;
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         topping: {
           id,
@@ -46,8 +46,8 @@ exports.detailTopping = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -60,8 +60,8 @@ exports.addTopping = async (req, res) => {
   });
   if (toppingExists) {
     res.status(500).send({
-      status: 'failed',
-      message: 'topping already exists',
+      status: "failed",
+      message: "topping already exists",
     });
     return false;
   }
@@ -73,7 +73,7 @@ exports.addTopping = async (req, res) => {
     const newTopping = await topping.create({ ...req.body, image: imageUpload, idUser });
     const { id, title, price } = newTopping;
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         topping: {
           id,
@@ -86,8 +86,8 @@ exports.addTopping = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -111,7 +111,7 @@ exports.updateTopping = async (req, res) => {
     });
     const { id, title, price, image } = findTopping;
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         topping: {
           id,
@@ -124,8 +124,8 @@ exports.updateTopping = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -139,7 +139,7 @@ exports.deleteTopping = async (req, res) => {
       },
     });
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         id,
       },
@@ -147,8 +147,8 @@ exports.deleteTopping = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
