@@ -220,28 +220,24 @@ const CartPage = () => {
   const handlerSubmit = async (e) => {
     e.preventDefault();
     try {
-      // if (fileUpload === "/images/upload-file.svg") {
-      //   setMessage("select your attachment");
-      //   setTimeout(() => {
-      //     setMessage("");
-      //   }, 3000);
-      //   return false;
-      // }
-      const formData = new FormData();
-      formData.set("name", name);
-      formData.set("email", email);
-      formData.set("phone", phone);
-      formData.set("posCode", posCode);
-      formData.set("address", address);
-      formData.set("total", totalPriceAll);
-      // formData.set("image", image);
+      const data = {
+        name,
+        email,
+        total: totalPriceAll,
+        phone,
+        posCode,
+        address,
+      };
+
+      const body = JSON.stringify(data);
 
       const config = {
         method: "POST",
         headers: {
           Authorization: "Bearer " + localStorage.token,
+          "Content-type": "application/json",
         },
-        body: formData,
+        body,
       };
 
       const response = await API().post("/transaction", config);

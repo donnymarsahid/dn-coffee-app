@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar";
 import ForgetPassword from "../../assets/modals/ForgetPassword";
 
 const Guest = () => {
+  console.log(process.env.REACT_APP_BASE_URL);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgetPass, setShowForgetPass] = useState(false);
@@ -36,10 +37,7 @@ const Guest = () => {
     setShowLogin(false);
   };
 
-  const { data: typeCoffee, isLoading } = useQuery(
-    "typeCoffeeCache",
-    getTypeCoffee
-  );
+  const { data: typeCoffee, isLoading } = useQuery("typeCoffeeCache", getTypeCoffee);
 
   const dataCoffee = typeCoffee?.slice(0, 4);
 
@@ -54,20 +52,13 @@ const Guest = () => {
   return (
     <>
       <title>WaysBucks</title>
-      <Navbar
-        handleShowLogin={handleShowLogin}
-        handleShowRegister={handleShowRegister}
-      />
+      <Navbar handleShowLogin={handleShowLogin} handleShowRegister={handleShowRegister} />
       <header>
         <div className="container d-flex align-items-center">
           <div className="jumbotron">
             <h1 className="mb-3">WAYSBUCKS</h1>
             <p>Things are changing, but we’re still here for you</p>
-            <p>
-              We have temporarily closed our in-store cafes, but select grocery
-              and drive-thru locations remaining open. Waysbucks Drivers is also
-              available
-            </p>
+            <p>We have temporarily closed our in-store cafes, but select grocery and drive-thru locations remaining open. Waysbucks Drivers is also available</p>
             <Link to="/all-menu">
               <button className="btn-order">LETS ORDER</button>
             </Link>
@@ -108,42 +99,20 @@ const Guest = () => {
         </Link>
       </div>
       <div class="carousel">
-        <div
-          id="carouselExampleControls"
-          class="carousel slide"
-          data-bs-ride="carousel"
-        >
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img
-                src="/images/carousel/jb-waysbucks-1.png"
-                class="d-block w-100"
-                alt="slide-1"
-              />
+              <img src="/images/carousel/jb-waysbucks-1.png" class="d-block w-100" alt="slide-1" />
             </div>
             <div class="carousel-item">
-              <img
-                src="/images/carousel/jb-waysbucks-2.png"
-                class="d-block w-100"
-                alt="slide-2"
-              />
+              <img src="/images/carousel/jb-waysbucks-2.png" class="d-block w-100" alt="slide-2" />
             </div>
           </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="prev"
-          >
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="next"
-          >
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
@@ -164,11 +133,7 @@ const Guest = () => {
               </div>
               <div class="detail">
                 <h3>WaysBucks Coffee, Jakarta City</h3>
-                <p>
-                  WaysBucks Coffee, in Road tomang number 23, RT.08/RW.04, west
-                  jakarta city, districts palmerah, ward Jatipulo, Post Code
-                  11430
-                </p>
+                <p>WaysBucks Coffee, in Road tomang number 23, RT.08/RW.04, west jakarta city, districts palmerah, ward Jatipulo, Post Code 11430</p>
                 <p>Open every day</p>
                 <p>
                   <i class="fas fa-clock"></i> 08:00AM - 21:00PM
@@ -210,22 +175,9 @@ const Guest = () => {
           Login
         </button>
       </section>
-      <Login
-        showLogin={showLogin}
-        handleCloseLogin={handleCloseLogin}
-        handleShowRegister={handleShowRegister}
-        handleShowForgetPass={handleShowForgetPass}
-      />
-      <Register
-        showRegister={showRegister}
-        handleCloseRegister={handleCloseRegister}
-        handleShowLogin={handleShowLogin}
-      />
-      <ForgetPassword
-        showForgetPass={showForgetPass}
-        handleCloseForgetPass={handleCloseForgetPass}
-        handleShowLogin={handleShowLogin}
-      />
+      <Login showLogin={showLogin} handleCloseLogin={handleCloseLogin} handleShowRegister={handleShowRegister} handleShowForgetPass={handleShowForgetPass} />
+      <Register showRegister={showRegister} handleCloseRegister={handleCloseRegister} handleShowLogin={handleShowLogin} />
+      <ForgetPassword showForgetPass={showForgetPass} handleCloseForgetPass={handleCloseForgetPass} handleShowLogin={handleShowLogin} />
     </>
   );
 };
