@@ -179,26 +179,11 @@ section.varian .container .row .col-md-3 .box-card img {
   cursor: pointer;
   position: relative;
 }
-section.varian
-  .container
-  .row
-  .col-md-3
-  .box-card
-  .image-card
-  .whistlist
-  button {
+section.varian .container .row .col-md-3 .box-card .image-card .whistlist button {
   border: none;
   background-color: transparent;
 }
-section.varian
-  .container
-  .row
-  .col-md-3
-  .box-card
-  .image-card
-  .whistlist
-  button.click-whistlist
-  i {
+section.varian .container .row .col-md-3 .box-card .image-card .whistlist button.click-whistlist i {
   font-weight: 600;
 }
 section.varian .container .row .col-md-3 .box-card .image-card .whistlist i {
@@ -533,5 +518,21 @@ section.about-store-page .content {
 }
 .page-reset-password button:hover {
   background-color: #fa0202;
+}
+.page-reset-password .box-show-pass-rp .rp-show-pass {
+  width: 88%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.page-reset-password .box-show-pass-rp .bx-icon {
+  background-color: var(--primaryColor);
+  width: 12%;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+.page-reset-password .box-show-pass-rp .bx-icon i {
+  color: white;
+  font-size: 15px;
 }
 /* Page Reset Pass End */

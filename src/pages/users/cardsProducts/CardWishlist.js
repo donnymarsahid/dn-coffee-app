@@ -1,32 +1,11 @@
 import React from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
 import convertRupiah from "rupiah-format";
-import { API, getUser } from "../../../config/api";
+import { API } from "../../../config/api";
 
-const CardCoffe = ({ coffee, refetch }) => {
-  const { data: userId } = useQuery("getUserIdCache", getUser);
-
+const CardWishlist = ({ coffee, refetch }) => {
   const parsingPrice = convertRupiah.convert(coffee.price);
-
-  const addWishlist = useMutation(async (id) => {
-    try {
-      const config = {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + localStorage.token,
-        },
-      };
-
-      const response = await API().post("/wishlist/" + id, config);
-
-      console.log(response);
-
-      refetch();
-    } catch (error) {
-      console.log(error);
-    }
-  });
 
   const deleteWishlist = useMutation(async (id) => {
     try {
@@ -45,14 +24,12 @@ const CardCoffe = ({ coffee, refetch }) => {
     }
   });
 
-  const findWishlist = coffee?.wishlists?.filter((data) => data.idUser === userId?.id);
-
   return (
     <>
-      <div className="col-md-3 mb-3">
+      <div className="col-md-3 mb-4">
         <div className="box-card">
           <div className="image-card">
-            <img src={coffee.image} alt={coffee.image} />
+            <img src={`${coffee.image}`} alt={coffee.image} />
             <div className="overlay d-flex justify-content-center align-items-center">
               {coffee.status === "not available" ? (
                 <button data-bs-toggle="modal" data-bs-target="#exampleModalNotAvailable">
@@ -64,19 +41,11 @@ const CardCoffe = ({ coffee, refetch }) => {
                 </Link>
               )}
             </div>
-            {coffee?.wishlists?.length === 0 || findWishlist[0]?.idUser !== userId?.id ? (
-              <div className="whistlist d-flex align-items-center justify-content-center" onClick={() => addWishlist.mutate(coffee.id)}>
-                <button className={`btn${coffee.id}`}>
-                  <i className="far fa-heart"></i>
-                </button>
-              </div>
-            ) : (
-              <div className="whistlist d-flex align-items-center justify-content-center" onClick={() => deleteWishlist.mutate(coffee.id)}>
-                <button className={`btn${coffee.id} click-whistlist`}>
-                  <i className="far fa-heart"></i>
-                </button>
-              </div>
-            )}
+            <div className="whistlist d-flex align-items-center justify-content-center" onClick={() => deleteWishlist.mutate(coffee.id)}>
+              <button className="click-whistlist">
+                <i className="far fa-heart "></i>
+              </button>
+            </div>
           </div>
           <div className="description">
             <div class="title d-flex">
@@ -95,4 +64,4 @@ const CardCoffe = ({ coffee, refetch }) => {
   );
 };
 
-export default CardCoffe;
+export default CardWishlist;

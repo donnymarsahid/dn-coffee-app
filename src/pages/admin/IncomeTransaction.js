@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import './css/style.css';
-import { API, getTransactions } from '../../config/api';
-import { useMutation, useQuery } from 'react-query';
-import { convert } from 'rupiah-format';
-import swal from 'sweetalert';
-import loading from '../../assets/img/loading.gif';
-import { Modal } from 'react-bootstrap';
-import { io } from 'socket.io-client';
-import { UserContext } from '../../context/userContext';
+import React, { useContext, useEffect, useState } from "react";
+import "./css/style.css";
+import { API, getTransactions } from "../../config/api";
+import { useMutation, useQuery } from "react-query";
+import { convert } from "rupiah-format";
+import swal from "sweetalert";
+import loading from "../../assets/img/loading.gif";
+import { Modal } from "react-bootstrap";
+import { io } from "socket.io-client";
+import { UserContext } from "../../context/userContext";
 
 let socket;
 const IncomeTransaction = () => {
-  const { data: transactions, refetch, isLoading } = useQuery('getTransactionsCache', getTransactions);
+  const { data: transactions, refetch, isLoading } = useQuery("getTransactionsCache", getTransactions);
   const array = [];
 
   const [transactionModal, setTransactionModal] = useState([]);
@@ -27,20 +27,20 @@ const IncomeTransaction = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    socket = io('http://localhost:3001', {
+    socket = io("http://localhost:3001", {
       auth: {
-        token: localStorage.getItem('token'),
+        token: localStorage.getItem("token"),
       },
       query: {
         id: state.user.id,
       },
     });
 
-    socket.on('new message', () => {
-      socket.emit('load messages', contact?.id);
+    socket.on("new message", () => {
+      socket.emit("load messages", contact?.id);
     });
 
-    socket.on('connect_error', (err) => {
+    socket.on("connect_error", (err) => {
       console.error(err.message);
     });
 
@@ -53,38 +53,38 @@ const IncomeTransaction = () => {
 
   const handlerOnTheWay = useMutation(async (id) => {
     try {
-      const body = JSON.stringify({ status: 'on the way' });
+      const body = JSON.stringify({ status: "on the way" });
       const config = {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
         },
         body,
       };
 
-      const responseUser = await API().get('/user/' + id);
+      const responseUser = await API().get("/user/" + id);
       setContact(responseUser.data.userDetail.user);
 
       swal({
-        title: 'Transaction already entered?',
-        icon: 'warning',
+        title: "Transaction already entered?",
+        icon: "warning",
         buttons: true,
         dangerMode: true,
       }).then(async (willDelete) => {
         if (willDelete) {
-          await API().put('/transaction/' + id, config);
+          await API().put("/transaction/" + id, config);
           const data = {
             idRecipient: responseUser.data.userDetail.user.id,
             message: `hello ${responseUser.data.userDetail.user.fullname} your order is being shipped, have a nice wait`,
           };
-          socket.emit('send message', data);
+          socket.emit("send message", data);
           refetch();
-          swal('Transaction success approve!', {
-            icon: 'success',
+          swal("Transaction success approve!", {
+            icon: "success",
           });
         } else {
-          swal('transaction waiting approve');
+          swal("transaction waiting approve");
         }
       });
     } catch (error) {
@@ -93,7 +93,7 @@ const IncomeTransaction = () => {
   });
 
   const loadMessages = () => {
-    socket.on('messages', (data) => {
+    socket.on("messages", (data) => {
       if (messages.length !== data.length) {
         if (data.length > 0) {
           const dataMessages = data.map((item) => ({
@@ -108,41 +108,41 @@ const IncomeTransaction = () => {
 
   const handlerCancel = useMutation(async (id) => {
     try {
-      const body = JSON.stringify({ status: 'cancel' });
+      const body = JSON.stringify({ status: "cancel" });
       const config = {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
         },
         body,
       };
 
-      const responseUser = await API().get('/user/' + id);
+      const responseUser = await API().get("/user/" + id);
       setContact(responseUser.data.userDetail.user);
 
       swal({
-        title: 'Are you sure cancel?',
-        text: 'transaction will be canceled!',
-        icon: 'warning',
+        title: "Are you sure cancel?",
+        text: "transaction will be canceled!",
+        icon: "warning",
         buttons: true,
         dangerMode: true,
       }).then(async (willDelete) => {
         if (willDelete) {
-          await API().put('/transaction/' + id, config);
+          await API().put("/transaction/" + id, config);
 
           const data = {
             idRecipient: responseUser.data.userDetail.user.id,
             message: `hello ${responseUser.data.userDetail.user.fullname} your order has been cancelled`,
           };
 
-          socket.emit('send message', data);
+          socket.emit("send message", data);
           refetch();
-          swal('Transaction has been deleted', {
-            icon: 'success',
+          swal("Transaction has been deleted", {
+            icon: "success",
           });
         } else {
-          swal('Safe transaction data stored');
+          swal("Safe transaction data stored");
         }
       });
     } catch (error) {
@@ -161,15 +161,15 @@ const IncomeTransaction = () => {
   const handlerDetailTransaction = async (id) => {
     try {
       const config = {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Authorization: 'Bearer ' + localStorage.token,
+          Authorization: "Bearer " + localStorage.token,
         },
       };
 
-      const response = await API().get('/transaction/' + id, config);
+      const response = await API().get("/transaction/" + id, config);
 
-      if (response.status === 'success') {
+      if (response.status === "success") {
         setTransactionModal(response.data.orders);
         setTransaction(response.data);
         handleShow();
@@ -212,7 +212,7 @@ const IncomeTransaction = () => {
                     </td>
                     <td className={`income ${data.status}`}>{data.status}</td>
                     <td className="text-center">
-                      {data.status === 'waiting approve' && (
+                      {data.status === "waiting approve" && (
                         <>
                           <button
                             className="me-2 btn-cancel"
@@ -232,17 +232,17 @@ const IncomeTransaction = () => {
                           </button>
                         </>
                       )}
-                      {data.status === 'on the way' && (
+                      {data.status === "on the way" && (
                         <>
                           <img src="/images/actions/success.svg" alt="icon-success" className="img-action" />
                         </>
                       )}
-                      {data.status === 'success' && (
+                      {data.status === "success" && (
                         <>
                           <img src="/images/actions/success.svg" alt="icon-success" className="img-action" />
                         </>
                       )}
-                      {data.status === 'cancel' && (
+                      {data.status === "cancel" && (
                         <>
                           <img src="/images/actions/cancel.svg" alt="icon-cancel" className="img-action" />
                         </>
@@ -275,12 +275,7 @@ const IncomeTransaction = () => {
               );
             })}
           </div>
-          <div class="attachment mt-3">
-            <img src={transaction.attachment} alt="attachment" width="80px" />
-            <a href={transaction.attachment} target="_blank" className="btn-preview">
-              Preview Attachment
-            </a>
-          </div>
+          <div class="attachment mt-3 txt-orderid">order_id : {transaction.id}</div>
         </Modal.Body>
         <Modal.Footer>
           <button className="btn-danger-profile" onClick={handleClose}>

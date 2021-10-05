@@ -38,7 +38,7 @@ nav .container-navbar .navbar-link ul li {
   letter-spacing: 1px;
 }
 nav .container-navbar .navbar-link ul li::after {
-  content: '';
+  content: "";
   background-color: var(--primaryColor);
   height: 3px;
   width: 0;
@@ -98,7 +98,7 @@ nav .navbar-link ul li.menu:hover .box {
 
 nav .navbar-link ul li.store .box p::after,
 nav .navbar-link ul li.menu .box p::after {
-  content: '';
+  content: "";
   display: block;
   background-color: #d14545;
   width: 0;
@@ -174,7 +174,7 @@ nav .dropdown-menu {
   width: 200px;
 }
 nav .dropdown-menu::before {
-  content: url('../../../assets/img/polygon.png');
+  content: url("../../../assets/img/polygon.png");
   position: absolute;
   top: -35px;
   right: 5px;
@@ -206,7 +206,7 @@ nav .dropdown-menu .dropdown-logout p {
 
   letter-spacing: 1px;
 }
-nav .dropdown-menu .dropdown-profile {
+nav .dropdown-menu .dropdown-profile.brder {
   border-bottom: 3px solid #a8a8a8;
 }
 nav .notification {
@@ -254,7 +254,7 @@ nav .dropdown-menu-notif .text-date {
   margin: 0;
 }
 nav .dropdown-menu-notif::before {
-  content: url('../../../assets/img/polygon.png');
+  content: url("../../../assets/img/polygon.png");
   position: absolute;
   top: -35px;
   right: 5px;
@@ -291,7 +291,7 @@ header .container {
 header .container .jumbotron {
   width: 90%;
   height: 100%;
-  background-image: url('../../../assets/img/bg-waysbucks.png');
+  background-image: url("../../../assets/img/bg-waysbucks.png");
   background-size: cover;
   border-radius: 10px;
   padding: 90px 400px 80px 80px;
@@ -428,7 +428,7 @@ label.label-topping {
 label.label-topping:before {
   background-color: white;
   color: white;
-  content: ' ';
+  content: " ";
   display: block;
   border-radius: 50%;
   border: 1px solid grey;
@@ -453,7 +453,7 @@ label.label-topping img {
 }
 
 :checked + label.label-topping:before {
-  content: '✓';
+  content: "✓";
   background-color: var(--primaryColor);
   transform: scale(1);
 }
@@ -910,5 +910,12 @@ section.profile .box-empty-transaction-profile {
 section.profile .box-empty-transaction-profile p {
   font-size: 22px !important;
   color: #9b03036c;
+}
+
+.txt-wishlist {
+  color: var(--primaryColor);
+  font-weight: 600;
+  padding: 10px 0 0 20px;
+  font-size: 18px;
 }
 /* Profile End */

@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import '../css/style.css';
-import { Link, useHistory } from 'react-router-dom';
-import logoWaysBucks from '../../../assets/img/logo-waysbucks.svg';
-import logout from '../../../assets/img/logout.svg';
-import user from '../../../assets/img/user.svg';
-import cartIcon from '../../../assets/img/cart.svg';
-import swal from 'sweetalert';
-import { UserContext } from '../../../context/userContext';
-import { useQuery } from 'react-query';
-import { getCarts, getUser } from '../../../config/api';
-import moment from 'moment';
-import { io } from 'socket.io-client';
+import React, { useContext, useEffect, useState } from "react";
+import "../css/style.css";
+import { Link, useHistory } from "react-router-dom";
+import logoWaysBucks from "../../../assets/img/logo-waysbucks.svg";
+import logout from "../../../assets/img/logout.svg";
+import user from "../../../assets/img/user.svg";
+import cartIcon from "../../../assets/img/cart.svg";
+import swal from "sweetalert";
+import { UserContext } from "../../../context/userContext";
+import { useQuery } from "react-query";
+import { getCarts, getUser } from "../../../config/api";
+import moment from "moment";
+import { io } from "socket.io-client";
 
 let socket;
 
@@ -20,26 +20,26 @@ const Navbar = () => {
   let [messages, setMessages] = useState([]);
   const [notif, setNotif] = useState(false);
 
-  const { data: carts } = useQuery('getCartsCache', getCarts);
-  const { data: userId } = useQuery('getUserIdCache', getUser);
+  const { data: carts } = useQuery("getCartsCache", getCarts);
+  const { data: userId } = useQuery("getUserIdCache", getUser);
 
   // Connection Socket.io
   useEffect(() => {
-    socket = io('http://localhost:3001', {
+    socket = io("http://localhost:3001", {
       auth: {
-        token: localStorage.getItem('token'),
+        token: localStorage.getItem("token"),
       },
       query: {
         id: state.user.id,
       },
     });
 
-    socket.on('connect_error', (err) => {
+    socket.on("connect_error", (err) => {
       console.error(err.message);
     });
 
-    socket.on('new message', () => {
-      socket.emit('load messages', '63d12ca0-6604-465d-b2e9-aa5838fce441');
+    socket.on("new message", () => {
+      socket.emit("load messages", "63d12ca0-6604-465d-b2e9-aa5838fce441");
       setNotif(true);
     });
 
@@ -56,21 +56,21 @@ const Navbar = () => {
 
   // Load Contact
   const loadContact = () => {
-    socket.emit('load admin contact');
-    socket.on('admin contact', (data) => {
+    socket.emit("load admin contact");
+    socket.on("admin contact", (data) => {
       // console.log(data)
       // const dataContact = {
       //     ...data,
       //     message: messages.length > 0 ? messages[messages.length - 1].message: 'Click here to start message'
       // }
       // setContacts([dataContact])
-      socket.emit('load messages', data.id);
+      socket.emit("load messages", data.id);
     });
   };
 
   // Load Message
   const loadMessages = () => {
-    socket.on('messages', (data) => {
+    socket.on("messages", (data) => {
       if (messages.length !== data.length) {
         if (data.length > 0) {
           const dataMessages = data.map((item) => ({
@@ -87,18 +87,18 @@ const Navbar = () => {
 
   const handlerLogout = () => {
     swal({
-      title: 'Are you sure logout?',
-      text: 'You will be logged out of the user page',
-      icon: 'warning',
+      title: "Are you sure logout?",
+      text: "You will be logged out of the user page",
+      icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((logout) => {
       if (logout) {
         dispatch({
-          type: 'LOGOUT',
+          type: "LOGOUT",
         });
-        localStorage.removeItem('token');
-        history.push('/');
+        localStorage.removeItem("token");
+        history.push("/");
         window.location.reload();
       }
     });
@@ -138,13 +138,13 @@ const Navbar = () => {
           </div>
           <div className="access d-flex">
             <div class="dropdown notification">
-              <i class="fas fa-bell pe-4 pt-1" style={{ fontSize: '28px' }} data-bs-toggle="dropdown" onClick={handlerNotification}></i>
+              <i class="fas fa-bell pe-4 pt-1" style={{ fontSize: "28px" }} data-bs-toggle="dropdown" onClick={handlerNotification}></i>
               <span className={notif === true ? `` : `d-none`}></span>
               <ul class="dropdown-menu dropdown-menu-notif dropdown-menu-dark">
                 {messages.length === 0 ? (
                   <>
-                    <li className="d-flex justify-content-center align-items-center no-notification" style={{ height: '200px', color: '#3d3d3d' }}>
-                      {' '}
+                    <li className="d-flex justify-content-center align-items-center no-notification" style={{ height: "200px", color: "#3d3d3d" }}>
+                      {" "}
                       No Notification <i class="fas fa-bell-slash"></i>
                     </li>
                   </>
@@ -161,7 +161,7 @@ const Navbar = () => {
                             <div class="message">
                               <div class="d-flex flex-column">
                                 <p className="title-notif">Waysbucks-coffee</p>
-                                <p className="m-0 text-date">{moment(data.createdAt).format('lll')}</p>
+                                <p className="m-0 text-date">{moment(data.createdAt).format("lll")}</p>
                               </div>
                               <p className="description-notif">{data.message}</p>
                             </div>
@@ -187,6 +187,12 @@ const Navbar = () => {
                     <li className="sort-dropdown dropdown-profile d-flex">
                       <img src={user} alt="profile" />
                       <p className="m-0">Profile</p>
+                    </li>
+                  </Link>
+                  <Link to="/wishlist" className="text-decoration-none">
+                    <li className="sort-dropdown dropdown-profile brder d-flex">
+                      <i class="far fa-heart"></i>
+                      <p className="m-0">Wishlist</p>
                     </li>
                   </Link>
                   <li className="sort-dropdown dropdown-logout d-flex" onClick={handlerLogout}>

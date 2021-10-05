@@ -344,4 +344,9 @@ section.income-transaction td.income.cancel {
 section.income-transaction td.income.on {
   color: #00d1ff;
 }
+.attachment.txt-orderid {
+  color: var(--primaryColor);
+  font-weight: 500;
+  font-size: 14px;
+}
 /* Income End */

@@ -74,10 +74,23 @@ const Login = ({ showLogin, handleCloseLogin, handleShowRegister, handleShowForg
             <form onSubmit={(e) => handlerSubmit.mutate(e)}>
               <input type="email" name="email" id="email" placeHolder="Email" className="mt-3 mb-3" autoComplete="off" required onChange={handlerInput} />
               <br />
-              <input type="password" name="password" id="password" placeHolder="Password" className="mb-4" autoComplete="off" required onChange={handlerInput} />
-              <i class="fas fa-eye-slash"></i>
+              <div className="box-pass d-flex">
+                <input
+                  type={showPassword ? `text` : `password`}
+                  name="password"
+                  id="password"
+                  placeHolder="Password"
+                  className="input-password"
+                  autoComplete="off"
+                  required
+                  onChange={handlerInput}
+                />
+                <div className="show-hide-pass d-flex align-items-center justify-content-center" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <i class="fas fa-eye"></i> : <i class="fas fa-eye-slash"></i>}
+                </div>
+              </div>
               <br />
-              <button type="submit">Login</button>
+              <button type="submit mt-4">Login</button>
             </form>
             <p className="text-center mt-3 d-flex justify-content-center">
               Don't have an account ? click

@@ -30,6 +30,7 @@ import Transactions from "./pages/users/Transactions";
 import ContactUsers from "./pages/users/Contact";
 import Contact from "./pages/guest/Contact";
 import ResetPassword from "./pages/guest/ResetPassword";
+import Wishlist from "./pages/users/Wishlist";
 
 function App() {
   const [state, dispatch] = useContext(UserContext);
@@ -81,6 +82,7 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/about" component={AboutUsers} />
             <Route path="/all-transaction" component={Transactions} />
+            <Route path="/wishlist" component={Wishlist} />
             <Route path="/*" component={NoMatch} />
           </Switch>
           <Footer />

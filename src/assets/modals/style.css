@@ -54,6 +54,25 @@
   font-weight: 500;
 }
 
+.access-login-register input.input-password {
+  width: 88%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.access-login-register .show-hide-pass {
+  background-color: var(--primaryColor);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  width: 12%;
+  cursor: pointer;
+}
+.access-login-register .show-hide-pass i {
+  color: white;
+  font-size: 16px;
+  padding-bottom: 3px;
+}
+
 .modal i {
   font-size: 24px;
   color: var(--primaryColor);

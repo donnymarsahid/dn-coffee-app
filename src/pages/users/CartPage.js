@@ -261,10 +261,6 @@ const CartPage = () => {
           alert("you closed the popup without finishing the payment");
         },
       });
-
-      // if (response.status === "success") {
-      //   handleShowOrder();
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -284,7 +280,7 @@ const CartPage = () => {
               <div className="col-md-7">
                 <div className="parent-list">{cartsProducts}</div>
                 <div class="row">
-                  <div class="col-md-8">
+                  <div class="col-md-12">
                     <div className="sub-total d-flex justify-content-between">
                       <div className="detail mt-3">
                         <p>Subtotal</p>
@@ -299,13 +295,6 @@ const CartPage = () => {
                       <p>Total</p>
                       <p>{convertRupiah.convert(totalPriceAll)}</p>
                     </div>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="file" name="image" id="upload" className="d-none" onChange={handlerFile} />
-                    <label for="upload" className="upload-struck d-flex flex-column align-items-center justify-content-center">
-                      <img src={fileUpload} alt="uploadFile" width="55px" />
-                      <p>Attache Of Transaction</p>
-                    </label>
                   </div>
                 </div>
               </div>
@@ -350,7 +339,7 @@ const CartPage = () => {
                 />
                 <textarea name="address" id="address" cols="30" rows="10" placeHolder="Address" defaultValue={userId.address} onChange={handlerInput}></textarea>
                 <button type="submit" className="btn-pay">
-                  Pay
+                  Checkout
                 </button>
               </div>
             </div>

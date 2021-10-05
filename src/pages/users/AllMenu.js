@@ -8,16 +8,8 @@ import loading from "../../assets/img/loading.gif";
 import ModalNotAvailable from "../guest/components/ModalNotAvailable";
 
 const AllMenu = () => {
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = useQuery("productsCache", getProducts);
-  const {
-    data: typeCoffee,
-    isLoading: loadTypeCoffee,
-    error: errorTypeCoffee,
-  } = useQuery("typeCoffeeCache", getTypeCoffee);
+  const { data: products, isLoading, error, refetch } = useQuery("productsCache", getProducts);
+  const { data: typeCoffee, isLoading: loadTypeCoffee, error: errorTypeCoffee, refetch: refetchTypeCoffee } = useQuery("typeCoffeeCache", getTypeCoffee);
   const [renderCoffee, setRenderCoffee] = useState(true);
   const [title, setTitle] = useState("All Menu");
 
@@ -29,7 +21,7 @@ const AllMenu = () => {
     );
   }
 
-  if (error) return <div className="custom-status">Error fetching data</div>;
+  if (error || errorTypeCoffee) return <div className="custom-status">Error fetching data</div>;
 
   return (
     <>
@@ -39,17 +31,11 @@ const AllMenu = () => {
           <div class="title d-flex justify-content-between mb-3">
             <h3>{title}</h3>
             <div class="dropdown">
-              <button
-                class="btn-sort-by dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+              <button class="btn-sort-by dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Sort By
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
+                <li style={{ cursor: "pointer" }}>
                   <div
                     class="dropdown-item"
                     onClick={() => {
@@ -60,7 +46,7 @@ const AllMenu = () => {
                     All Menu
                   </div>
                 </li>
-                <li>
+                <li style={{ cursor: "pointer" }}>
                   <div
                     class="dropdown-item"
                     onClick={() => {
@@ -76,12 +62,8 @@ const AllMenu = () => {
           </div>
           <div className="row">
             {renderCoffee
-              ? products?.map((data) => (
-                  <CardAllCoffee coffee={data} key={data.id} />
-                ))
-              : typeCoffee?.map((data) => (
-                  <CardCoffee coffee={data} key={data.id} />
-                ))}
+              ? products?.map((data) => <CardAllCoffee coffee={data} key={data.id} refetch={refetch} />)
+              : typeCoffee?.map((data) => <CardCoffee coffee={data} key={data.id} refetch={refetchTypeCoffee} />)}
           </div>
         </div>
       </section>

@@ -13,6 +13,9 @@ const ResetPassword = () => {
   const [showRegister, setShowRegister] = useState(false);
   const [showForgetPass, setShowForgetPass] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
   const { id } = useParams();
   const [message, setMessage] = useState("");
   const [form, setForm] = useState({
@@ -65,7 +68,7 @@ const ResetPassword = () => {
         body: dataPassword,
       };
       const response = await API().put("/reset-password/" + id, config);
-    console.log(response);
+      console.log(response);
 
       if (response.status === "success") {
         setMessage("Password changed successfully, please login");
@@ -87,11 +90,19 @@ const ResetPassword = () => {
           )}
           <label>New Password</label>
           <br />
-          <input type="password" name="password" onChange={handlerInput} />
-          <br />
+          <div className="box-show-pass-rp d-flex">
+            <input type="password" type={showPassword ? `text` : `password`} name="password" className="rp-show-pass" onChange={handlerInput} />
+            <div className="bx-icon d-flex justify-content-center align-items-center" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <i class="fas fa-eye"></i> : <i class="fas fa-eye-slash"></i>}
+            </div>
+          </div>
           <label className="mt-3">Confirm New Password</label>
-          <br />
-          <input type="password" name="confirmPassword" onChange={handlerInput} />
+          <div className="box-show-pass-rp d-flex">
+            <input type="password" type={showPasswordConfirm ? `text` : `password`} name="confirmPassword" className="rp-show-pass" onChange={handlerInput} />
+            <div className="bx-icon d-flex justify-content-center align-items-center" onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}>
+              {showPasswordConfirm ? <i class="fas fa-eye"></i> : <i class="fas fa-eye-slash"></i>}
+            </div>
+          </div>
           <br />
           <button type="submit">Reset Password</button>
         </form>

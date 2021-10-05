@@ -7,6 +7,8 @@ import "./style.css";
 
 const Register = ({ showRegister, handleCloseRegister, handleShowLogin }) => {
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   const [form, setForm] = useState({
     fullname: "",
@@ -72,59 +74,48 @@ const Register = ({ showRegister, handleCloseRegister, handleShowLogin }) => {
               </div>
             )}
             <form onSubmit={handlerSubmit}>
-              <input
-                type="text"
-                name="fullname"
-                id="fullname"
-                placeHolder="Full Name"
-                className="mt-3 mb-3"
-                onChange={handlerInput}
-                autoComplete="off"
-                required
-              />
+              <input type="text" name="fullname" id="fullname" placeHolder="Full Name" className="mt-3 mb-3" onChange={handlerInput} autoComplete="off" required />
               <br />
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeHolder="Email"
-                className="mt-3 mb-3"
-                onChange={handlerInput}
-                autoComplete="off"
-                required
-              />
+              <input type="email" name="email" id="email" placeHolder="Email" className="mt-2 mb-3" onChange={handlerInput} autoComplete="off" required />
               <br />
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeHolder="Password"
-                className="mb-4"
-                onChange={handlerInput}
-                autoComplete="off"
-                required
-              />
+              <div className="box-pass d-flex">
+                <input
+                  type={showPassword ? `text` : `password`}
+                  name="password"
+                  id="password"
+                  placeHolder="Password"
+                  className="input-password"
+                  autoComplete="off"
+                  required
+                  onChange={handlerInput}
+                />
+                <div className="show-hide-pass d-flex align-items-center justify-content-center" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <i class="fas fa-eye"></i> : <i class="fas fa-eye-slash"></i>}
+                </div>
+              </div>
               <br />
-              <input
-                type="password"
-                name="confirmPassword"
-                id="confrim-password"
-                placeHolder="Confirm Password"
-                className="mb-4"
-                onChange={handlerInput}
-                autoComplete="off"
-                required
-              />
+              <div className="box-pass d-flex">
+                <input
+                  type={showPasswordConfirm ? `text` : `password`}
+                  name="confirmPassword"
+                  id="confrim-password"
+                  placeHolder="Confirm Password"
+                  className="input-password"
+                  autoComplete="off"
+                  required
+                  onChange={handlerInput}
+                />
+                <div className="show-hide-pass d-flex align-items-center justify-content-center" onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}>
+                  {showPasswordConfirm ? <i class="fas fa-eye"></i> : <i class="fas fa-eye-slash"></i>}
+                </div>
+              </div>
+
               <br />
               <button type="submit">Register</button>
             </form>
             <p className="text-center mt-3 d-flex justify-content-center">
               Already have an account ? click
-              <p
-                className="ps-1 click m-0 text-decoration-underline"
-                onClick={handleShowLogin}
-                style={{ cursor: "pointer" }}
-              >
+              <p className="ps-1 click m-0 text-decoration-underline" onClick={handleShowLogin} style={{ cursor: "pointer" }}>
                 here
               </p>
             </p>
