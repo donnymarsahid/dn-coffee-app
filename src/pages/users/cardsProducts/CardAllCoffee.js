@@ -7,9 +7,6 @@ import { API, getUser } from "../../../config/api";
 const CardAllCoffee = ({ coffee, refetch }) => {
   const parsingPrice = convertRupiah.convert(coffee.price);
   const { data: userId } = useQuery("getUserIdCache", getUser);
-  console.log(userId);
-
-  console.log(coffee);
 
   const addWishlist = useMutation(async (id) => {
     try {
@@ -21,10 +18,7 @@ const CardAllCoffee = ({ coffee, refetch }) => {
       };
 
       const response = await API().post("/wishlist/" + id, config);
-
       console.log(response);
-
-      refetch();
     } catch (error) {
       console.log(error);
     }

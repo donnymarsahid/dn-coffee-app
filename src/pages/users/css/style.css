@@ -640,6 +640,9 @@ section.cart-page .container .col-md-5 button.btn-pay {
   outline: none;
   background-color: var(--primaryColor);
 }
+section.cart-page .container .col-md-5 button.btn-pay:hover {
+  background-color: #cf0808;
+}
 section.cart-page .container .col-md-7 .sub-total {
   border-top: 1.5px solid #974a4a;
   border-bottom: 1.5px solid #974a4a;

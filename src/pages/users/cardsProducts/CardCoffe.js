@@ -20,8 +20,6 @@ const CardCoffe = ({ coffee, refetch }) => {
 
       const response = await API().post("/wishlist/" + id, config);
 
-      console.log(response);
-
       refetch();
     } catch (error) {
       console.log(error);
