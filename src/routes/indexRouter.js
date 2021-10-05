@@ -15,6 +15,7 @@ const {
   notification,
 } = require("../controllers/transaction");
 const { getUsers, deleteUser, getUser, updateUser, getUserDetail } = require("../controllers/user");
+const { getWishlistUser, addWishlist, deleteWishlist } = require("../controllers/wishlist");
 const { authToken, permission } = require("../middlewares/auth");
 const { uploadFile } = require("../middlewares/uploadFile");
 
@@ -63,5 +64,10 @@ router.put("/transaction/:id", authToken, updateTransaction);
 router.delete("/transaction/:id", authToken, permission("admin"), deleteTransaction);
 router.get("/transaction/:id", authToken, permission("admin"), getDetailTransaction);
 router.post("/notification", notification);
+
+// Wishlist
+router.get("/wishlist", authToken, getWishlistUser);
+router.post("/wishlist/:id", authToken, addWishlist);
+router.delete("/wishlist/:id", authToken, deleteWishlist);
 
 module.exports = router;

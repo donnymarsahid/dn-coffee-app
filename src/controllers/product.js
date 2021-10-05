@@ -1,24 +1,31 @@
-const { product, user } = require('../../models');
+const { product, user, wishlist } = require("../../models");
 
 exports.getProducts = async (req, res) => {
   try {
     const products = await product.findAll({
-      order: [['createdAt', 'DESC']],
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: user,
-          as: 'user',
+          as: "user",
           attributes: {
-            exclude: ['createdAt', 'updatedAt', 'password'],
+            exclude: ["createdAt", "updatedAt", "password"],
+          },
+        },
+        {
+          model: wishlist,
+          as: "wishlists",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
           },
         },
       ],
       attributes: {
-        exclude: ['createdAt', 'updatedAt', 'idUser'],
+        exclude: ["createdAt", "updatedAt", "idUser"],
       },
     });
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         products,
       },
@@ -26,8 +33,8 @@ exports.getProducts = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -42,7 +49,7 @@ exports.detailProduct = async (req, res) => {
     });
     const { id, title, price, image, status } = findProduct;
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         product: {
           id,
@@ -56,8 +63,8 @@ exports.detailProduct = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -70,8 +77,8 @@ exports.addProduct = async (req, res) => {
   });
   if (productExists) {
     res.status(500).send({
-      status: 'failed',
-      message: 'product already exists',
+      status: "failed",
+      message: "product already exists",
     });
     return false;
   }
@@ -83,7 +90,7 @@ exports.addProduct = async (req, res) => {
     const newProduct = await product.create({ ...req.body, image: imageUpload, idUser });
     const { id, title, price, status } = newProduct;
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         product: {
           id,
@@ -97,8 +104,8 @@ exports.addProduct = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -122,7 +129,7 @@ exports.updateProduct = async (req, res) => {
     });
     const { id, title, price, image, status } = findProduct;
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         product: {
           id,
@@ -136,8 +143,8 @@ exports.updateProduct = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -145,25 +152,32 @@ exports.updateProduct = async (req, res) => {
 exports.getTypeCoffee = async (req, res) => {
   try {
     const products = await product.findAll({
-      order: [['updatedAt', 'DESC']],
+      order: [["updatedAt", "DESC"]],
       where: {
-        typeCoffee: 'coffee variant',
+        typeCoffee: "coffee variant",
       },
       include: [
         {
           model: user,
-          as: 'user',
+          as: "user",
           attributes: {
-            exclude: ['createdAt', 'updatedAt', 'password'],
+            exclude: ["createdAt", "updatedAt", "password"],
+          },
+        },
+        {
+          model: wishlist,
+          as: "wishlists",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
           },
         },
       ],
       attributes: {
-        exclude: ['createdAt', 'updatedAt', 'idUser'],
+        exclude: ["createdAt", "updatedAt", "idUser"],
       },
     });
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         products,
       },
@@ -171,8 +185,8 @@ exports.getTypeCoffee = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };
@@ -186,7 +200,7 @@ exports.deleteProduct = async (req, res) => {
       },
     });
     res.send({
-      status: 'success',
+      status: "success",
       data: {
         id,
       },
@@ -194,8 +208,8 @@ exports.deleteProduct = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({
-      status: 'failed',
-      message: 'Server Error',
+      status: "failed",
+      message: "Server Error",
     });
   }
 };

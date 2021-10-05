@@ -27,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
           name: "idUser",
         },
       });
+      user.hasMany(models.wishlist, {
+        as: "wishlists",
+        foreignKey: {
+          name: "idUser",
+        },
+      });
       user.hasMany(models.chat, {
         as: "senderMessage",
         foreignKey: {
