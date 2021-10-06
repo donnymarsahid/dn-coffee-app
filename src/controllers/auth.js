@@ -3,7 +3,7 @@ require("dotenv").config();
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const sendResetLink = require("../sendEmail/sendEmail");
+const sendMailFunction = require("../sendEmail/sendEmail");
 const { v4: uuidv4 } = require("uuid");
 
 exports.register = async (req, res) => {
@@ -171,8 +171,8 @@ exports.forgetPassword = async (req, res) => {
           },
         }
       );
-      const link = `To reset your password, please click on this link: http://localhost:3000/reset-password/${id}`;
-      await sendResetLink(thisUser.email, "Reset Password Instructions", link);
+      const link = `https://7238-180-243-2-155.ngrok.io/reset-password/${id}`;
+      await sendMailFunction.sendResetLink(thisUser.email, "Reset Password Instructions", link, thisUser.fullname);
     } else {
       res.status(500).send({
         status: "failed",

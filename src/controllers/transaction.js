@@ -1,5 +1,6 @@
 const { order, transaction, user, toppingOrder, topping, product, cart } = require("../../models");
 const midtransClient = require("midtrans-client");
+const sendMailFunction = require("../sendEmail/sendEmail");
 
 exports.getTransaction = async (req, res) => {
   try {
@@ -343,6 +344,9 @@ exports.notification = async (req, res) => {
         await cart.destroy({ where: { id: getIdCart } });
 
         handleTransaction("waiting approve", orderId);
+
+        await sendMailFunction.sendStatusPayment(orderId, fraudStatus);
+
         res.status(200);
       }
     } else if (transactionStatus == "cancel" || transactionStatus == "deny" || transactionStatus == "expire") {
