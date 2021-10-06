@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 import { getCarts, getUser } from "../../../config/api";
 import moment from "moment";
 import { io } from "socket.io-client";
+import iconWishlist from "../../../assets/img/wishlist.svg";
 
 let socket;
 
@@ -191,7 +192,7 @@ const Navbar = () => {
                   </Link>
                   <Link to="/wishlist" className="text-decoration-none">
                     <li className="sort-dropdown dropdown-profile brder d-flex">
-                      <i class="far fa-heart"></i>
+                      <img src={iconWishlist} alt="wishlist" style={{ width: "35px" }} />
                       <p className="m-0">Wishlist</p>
                     </li>
                   </Link>

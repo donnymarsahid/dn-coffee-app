@@ -18,7 +18,7 @@ const CardAllCoffee = ({ coffee, refetch }) => {
       };
 
       const response = await API().post("/wishlist/" + id, config);
-      console.log(response);
+      refetch();
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +34,6 @@ const CardAllCoffee = ({ coffee, refetch }) => {
       };
 
       const response = await API().delete("/wishlist/" + id, config);
-      console.log(response);
       refetch();
     } catch (error) {
       console.log(error);
