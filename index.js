@@ -25,5 +25,5 @@ const indexRouter = require('./src/routes/indexRouter');
 app.use('/api/v1', indexRouter);
 
 server.listen(port, () => {
-  console.log(`server is ok PORT:${PORT}`);
+  console.log(`server is ok PORT:${port}`);
 });
