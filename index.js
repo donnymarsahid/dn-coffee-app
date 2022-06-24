@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const PORT = 3001;
+const port = process.env.PORT || 3001;
 const cors = require('cors');
 
 const http = require('http');
@@ -24,6 +24,6 @@ app.use(express.static('public'));
 const indexRouter = require('./src/routes/indexRouter');
 app.use('/api/v1', indexRouter);
 
-server.listen(PORT, () => {
+server.listen(port, () => {
   console.log(`server is ok PORT:${PORT}`);
 });
