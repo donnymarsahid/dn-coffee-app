@@ -16,7 +16,8 @@ module.exports = {
           password: hashingPassword,
           image: 'https://dn-waysbucks.herokuapp.com/images/admin.png',
           status: 'admin',
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}
