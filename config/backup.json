@@ -1,10 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "null",
+    "password": null,
     "database": "waysbucks_be",
     "host": "localhost",
-    "port": "5432",
     "dialect": "mysql"
   },
   "test": {
@@ -15,14 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres",
-    "protocol": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }

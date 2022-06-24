@@ -14,7 +14,7 @@ module.exports = {
           fullname: 'Admin WaysBucks',
           email: 'adminwaysbucks@gmail.com',
           password: hashingPassword,
-          image: 'http://localhost:3001/images/admin.png',
+          image: 'https://dn-waysbucks.herokuapp.com/images/admin.png',
           status: 'admin',
         },
       ],
@@ -22,5 +22,5 @@ module.exports = {
     );
   },
 
-  down: async (queryInterface, Sequelize) => {},
+  down: async (queryInterface, Sequelize) => { },
 };
