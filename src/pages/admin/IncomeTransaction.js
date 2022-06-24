@@ -27,7 +27,7 @@ const IncomeTransaction = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    socket = io("http://localhost:3001", {
+    socket = io("https://dn-waysbucks.herokuapp.com", {
       auth: {
         token: localStorage.getItem("token"),
       },
