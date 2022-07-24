@@ -40,7 +40,7 @@ const Login = ({ showLogin, handleCloseLogin, handleShowRegister, handleShowForg
           payload: response.data.user,
         });
         if (response.data.user.status === "admin") {
-          history.push("/admin");
+          // history.push("/admin");
           window.location.reload();
         } else {
           history.push("/");
