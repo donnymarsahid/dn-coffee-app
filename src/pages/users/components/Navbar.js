@@ -161,7 +161,7 @@ const Navbar = () => {
                             </div>
                             <div class="message">
                               <div class="d-flex flex-column">
-                                <p className="title-notif">Waysbucks-coffee</p>
+                                <p className="title-notif">DNcoffee-coffee</p>
                                 <p className="m-0 text-date">{moment(data.createdAt).format("lll")}</p>
                               </div>
                               <p className="description-notif">{data.message}</p>
