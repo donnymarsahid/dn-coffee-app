@@ -9,7 +9,7 @@ const ModalNotAvailable = () => {
             <div class="modal-header">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center" style={{ color: '#bd0707', fontWeight: '500', fontSize: '18px' }}>
+            <div class="modal-body text-center" style={{ color: '#00959C', fontWeight: '500', fontSize: '18px' }}>
               This product is currently unavailable
             </div>
             <div class="modal-footer"></div>

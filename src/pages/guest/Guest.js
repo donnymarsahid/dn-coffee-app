@@ -51,12 +51,12 @@ const Guest = () => {
 
   return (
     <>
-      <title>WaysBucks</title>
+      <title>DNcoffee</title>
       <Navbar handleShowLogin={handleShowLogin} handleShowRegister={handleShowRegister} />
       <header>
         <div className="container d-flex align-items-center">
           <div className="jumbotron">
-            <h1 className="mb-3">WAYSBUCKS</h1>
+            <h1 className="mb-3">DN'COFFFEE</h1>
             <p>Things are changing, but we’re still here for you</p>
             <p>We have temporarily closed our in-store cafes, but select grocery and drive-thru locations remaining open. Waysbucks Drivers is also available</p>
             <Link to="/all-menu">
@@ -102,8 +102,8 @@ const Guest = () => {
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="/images/carousel/jb-waysbucks-1.png" class="d-block w-100" alt="slide-1" />
-            </div>
+              <img src="/images/carousel/jb-waysbucks-2.png" class="d-block w-100" alt="slide-1" />
+            </div>  
             <div class="carousel-item">
               <img src="/images/carousel/jb-waysbucks-2.png" class="d-block w-100" alt="slide-2" />
             </div>
@@ -123,7 +123,7 @@ const Guest = () => {
           <div class="row">
             <h3>Location</h3>
             <div class="col-md-6">
-              <img src={store} alt="merchant-waysbucks" />
+              <img src={store} alt="merchant-waysbucks" width="550" />
             </div>
             <div class="col-md-6 d-flex">
               <div class="icon me-2">
@@ -132,15 +132,15 @@ const Guest = () => {
                 </h3>
               </div>
               <div class="detail">
-                <h3>WaysBucks Coffee, Jakarta City</h3>
-                <p>WaysBucks Coffee, in Road tomang number 23, RT.08/RW.04, west jakarta city, districts palmerah, ward Jatipulo, Post Code 11430</p>
+                <h3>DNcoffee Coffee, Jakarta City</h3>
+                <p>DNcoffee Coffee, in Road tomang number 23, RT.08/RW.04, west jakarta city, districts palmerah, ward Jatipulo, Post Code 11430</p>
                 <p>Open every day</p>
                 <p>
                   <i class="fas fa-clock"></i> 08:00AM - 21:00PM
                 </p>
                 <p>
                   <a href="/store" className="text-decoration-none">
-                    <i class="fas fa-envelope"></i> waysbuckscoffee@gmail.com
+                    <i class="fas fa-envelope"></i> dn.coffee@gmail.com
                   </a>
                 </p>
                 <p>

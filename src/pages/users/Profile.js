@@ -126,7 +126,7 @@ const Profile = () => {
 
   return (
     <>
-      <title>WaysBucks | Profile</title>
+      <title>DNcoffee | Profile</title>
       <section className="profile mb-5">
         <div class="container-profile">
           <div class="row">

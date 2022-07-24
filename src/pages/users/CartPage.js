@@ -117,7 +117,7 @@ const CartPage = () => {
   if (carts?.length === 0) {
     return (
       <>
-        <title>WaysBucks | Cart</title>
+        <title>DNcoffee | Cart</title>
         <section className="cart-page-null d-flex align-items-center justify-content-center flex-column">
           <img src="/images/empty-cart.png" alt="empty-cart" width="530px" />
           <Link to="/all-menu">
@@ -268,7 +268,7 @@ const CartPage = () => {
 
   return (
     <>
-      <title>WaysBucks | Cart</title>
+      <title>DNcoffee | Cart</title>
       <section className="cart-page">
         <div className="container">
           <form onSubmit={handlerSubmit}>

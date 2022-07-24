@@ -1,5 +1,5 @@
 :root {
-  --primaryColor: #bd0707;
+  --primaryColor: #00959C;
   --secondaryColor: #f6dada;
 }
 
@@ -287,19 +287,19 @@ section.store .about-store .box-coffee-journey p.title {
   color: var(--primaryColor);
 }
 section.store h1 {
-  color: #bd0707;
+  color: #00959C;
   font-weight: 700;
   font-size: 36px;
 }
 section.store p {
-  color: #bd0707;
+  color: #00959C;
   font-weight: 600;
 }
 section.store a {
   color: var(--primaryColor);
 }
 section.store h3 {
-  color: #bd0707;
+  color: #00959C;
   font-weight: 600;
 }
 /* Store End */

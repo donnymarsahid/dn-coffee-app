@@ -1,5 +1,5 @@
 :root {
-  --primaryColor: #bd0707;
+  --primaryColor: #00959C;
   --secondaryColor: #f6dada;
 }
 
@@ -815,7 +815,7 @@ section.profile .transaction.all-transaction-page .col-md-6 {
   cursor: pointer;
 }
 .modal-profile label.input-profile p {
-  color: #bd070763;
+  color: #00959C63;
 }
 .modal-profile .form-profile label.text-profile,
 .modal-profile .form-profile .text-profile {

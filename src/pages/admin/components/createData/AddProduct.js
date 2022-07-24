@@ -102,7 +102,7 @@ const AddProduct = () => {
 
   return (
     <>
-      <title>WaysBucks | Add Product</title>
+      <title>DNcoffee | Add Product</title>
 
       <section className="add-product">
         <div class="container">

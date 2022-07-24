@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import '../css/style.css';
 import { Link, useHistory } from 'react-router-dom';
-import logoWaysBucks from '../../../assets/img/logo-waysbucks.svg';
+import logoDNcoffee from '../../../assets/img/logo-waysbucks.svg';
 import swal from 'sweetalert';
 import logout from '../../../assets/img/logout.svg';
 import { UserContext } from '../../../context/userContext';
@@ -36,7 +36,7 @@ const NavbarAdmin = () => {
         <div className="container-navbar d-flex justify-content-between align-items-center">
           <div className="logo-brand">
             <Link to="/admin">
-              <img src={logoWaysBucks} alt="logo-waysbucks" />
+              <img src={logoDNcoffee} alt="logo-waysbucks" />
             </Link>
           </div>
           <div className="access d-flex">

@@ -9,10 +9,10 @@ const TableUser = () => {
 
   return (
     <>
-      <title>WaysBucks | User</title>
+      <title>DNcoffee | User</title>
       <section className="income-transaction">
         <div class="container">
-          <h1 className="mb-3">Users WaysBucks</h1>
+          <h1 className="mb-3">Users DNcoffee</h1>
           <table class="table">
             <thead>
               <tr>

@@ -56,10 +56,10 @@ const Transactions = () => {
   if (transactionsUser?.length === 0) {
     return (
       <>
-        <title>WaysBucks | Transactions</title>
+        <title>DNcoffee | Transactions</title>
         <div className="custom-status flex-column">
           <img src={emptyTransaction} alt="empty-transaction" width="400px" />
-          <h3 style={{ color: '#bd0707' }}>empty transaction</h3>
+          <h3 style={{ color: '#00959C' }}>empty transaction</h3>
         </div>
       </>
     );
@@ -67,7 +67,7 @@ const Transactions = () => {
 
   return (
     <>
-      <title>WaysBucks | Transactions</title>
+      <title>DNcoffee | Transactions</title>
       <section className="profile">
         <div class="container">
           <div class="row">

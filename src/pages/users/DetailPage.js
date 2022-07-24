@@ -65,7 +65,7 @@ const DetailPage = () => {
 
   return (
     <>
-      <title>WaysBucks | Detail Coffee</title>
+      <title>DNcoffee | Detail Coffee</title>
       <section className="detail-page">
         <div className="container">
           <div className="row">

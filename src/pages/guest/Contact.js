@@ -29,7 +29,7 @@ const Contact = () => {
   };
   return (
     <>
-      <title>WaysBucks | Contact</title>
+      <title>DNcoffee | Contact</title>
       <Navbar
         handleShowLogin={handleShowLogin}
         handleShowRegister={handleShowRegister}
@@ -40,7 +40,7 @@ const Contact = () => {
         <div class="email d-flex flex-column border-lg">
           <i class="fas fa-envelope text-center"></i>
           <a href="mailto:waysbucks.coffee@gmail.com" class="ms-2">
-            waysbucks.coffee@gmail.com
+            dn.coffee@gmail.com
           </a>
         </div>
         <div class="telp d-flex flex-column border-lg">

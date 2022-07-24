@@ -5,7 +5,7 @@ import assetTwo from "../../assets/img/about-2.png";
 const About = () => {
   return (
     <>
-      <title>WaysBucks | About</title>
+      <title>DNcoffee | About</title>
 
       <section className="about-store-page">
         <div className="jumbotron jumbotron-fluid">
@@ -41,7 +41,7 @@ const About = () => {
               <div class="col-md-7">
                 <h3>COFFEE JOURNEY</h3>
                 <p className="pe-3">
-                  At WaysBucks, we make sure you have the best coffee experience. We work relentlessly to guarantee we deliver on our promise. From harvest, tasting,
+                  At DNcoffee, we make sure you have the best coffee experience. We work relentlessly to guarantee we deliver on our promise. From harvest, tasting,
                   roasting and working together with the producers in Indonesia to produce the best crop to our customers.
                 </p>
               </div>

@@ -93,7 +93,7 @@ const AddTopping = () => {
   });
   return (
     <>
-      <title>WaysBucks | Add Topping</title>
+      <title>DNcoffee | Add Topping</title>
 
       <section className="add-product">
         <div class="container">

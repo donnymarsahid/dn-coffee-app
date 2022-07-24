@@ -40,7 +40,7 @@ const TableTopping = () => {
 
   return (
     <>
-      <title>WaysBucks | Topping</title>
+      <title>DNcoffee | Topping</title>
       <section className="income-transaction">
         <div class="container">
           <div class="title d-flex justify-content-between align-items-center">

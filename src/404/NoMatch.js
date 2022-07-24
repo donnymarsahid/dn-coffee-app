@@ -7,7 +7,7 @@ const NoMatch = () => {
   return (
     <>
       <div class="nomatch d-flex align-items-center flex-column justify-content-center" style={{ height: '100vh' }}>
-        <h2 style={{ color: '#bd0707' }} className="fw-bolder"></h2>
+        <h2 style={{ color: '#00959C' }} className="fw-bolder"></h2>
       </div>
     </>
   );

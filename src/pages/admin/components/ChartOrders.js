@@ -26,7 +26,7 @@ const ChartOrders = () => {
   const nameValue = [];
   const value = [];
 
-  const findUserTarget = users?.filter((data) => data.fullname !== 'Admin WaysBucks');
+  const findUserTarget = users?.filter((data) => data.fullname !== 'Admin DNcoffee');
 
   useEffect(() => {
     findUserTarget.map((data) => {

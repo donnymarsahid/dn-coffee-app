@@ -181,7 +181,7 @@ const IncomeTransaction = () => {
 
   return (
     <>
-      <title>WaysBucks | Income Transaction</title>
+      <title>DNcoffee | Income Transaction</title>
       <section className="income-transaction">
         <div class="container">
           <h1 className="mb-3">Income Transaction</h1>

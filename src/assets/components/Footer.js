@@ -13,7 +13,7 @@ const Footer = () => {
                 <a href="/">
                   Hub : 0838-7223-9021 <br />
                 </a>
-                <a href="/">Email : waysbucks.coffee@gmail.com</a>
+                <a href="/">Email : dn.coffee@gmail.com</a>
               </p>
             </div>
             <div className="col-md-4 text-center sosmed">
@@ -49,7 +49,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-center mt-5">&copy; copyright 2021 | WaysBucks `DonnyMarsahid</p>
+            <p className="text-center mt-5">&copy; copyright 2021 | DNcoffee `DonnyMarsahid</p>
           </div>
         </div>
       </footer>

@@ -89,7 +89,7 @@ const UpdateProduct = () => {
 
   return (
     <>
-      <title>WaysBucks | Update Product</title>
+      <title>DNcoffee | Update Product</title>
       <section className="add-product">
         <div class="container">
           <div class="row">

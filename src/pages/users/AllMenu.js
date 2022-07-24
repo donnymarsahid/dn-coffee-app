@@ -25,7 +25,7 @@ const AllMenu = () => {
 
   return (
     <>
-      <title>WaysBucks | All Menu</title>
+      <title>DNcoffee | All Menu</title>
       <section className="all-menu varian">
         <div className="container">
           <div class="title d-flex justify-content-between mb-3">

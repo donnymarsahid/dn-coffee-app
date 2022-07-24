@@ -23,7 +23,7 @@ const Wishlist = () => {
   if (wishlist?.length === 0) {
     return (
       <>
-        <title>WaysBucks | Cart</title>
+        <title>DNcoffee | Cart</title>
         <section className="cart-page-null d-flex align-items-center justify-content-center flex-column">
           <img src={noData} alt="empty-cart" width="150px" />
           <p className="txt-wishlist">No Wishlist</p>
@@ -34,7 +34,7 @@ const Wishlist = () => {
 
   return (
     <>
-      <title>WaysBucks | Wishlist</title>
+      <title>DNcoffee | Wishlist</title>
       <section className="all-menu varian">
         <div className="container">
           <div class="title d-flex justify-content-between mb-3">

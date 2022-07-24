@@ -31,7 +31,7 @@ const About = () => {
   };
   return (
     <>
-      <title>WaysBucks | About</title>
+      <title>DNcoffee | About</title>
       <Navbar
         handleShowLogin={handleShowLogin}
         handleShowRegister={handleShowRegister}
@@ -73,7 +73,7 @@ const About = () => {
               <div class="col-md-7">
                 <h3>COFFEE JOURNEY</h3>
                 <p className="pe-3">
-                  At WaysBucks, we make sure you have the best coffee
+                  At DNcoffee, we make sure you have the best coffee
                   experience. We work relentlessly to guarantee we deliver on
                   our promise. From harvest, tasting, roasting and working
                   together with the producers in Indonesia to produce the best

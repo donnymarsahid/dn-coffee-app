@@ -3,14 +3,14 @@ import React from "react";
 const Contact = () => {
   return (
     <>
-      <title>WaysBucks | Contact</title>
+      <title>DNcoffee | Contact</title>
       <div class="page-contact d-flex align-items-center justify-content-center flex-column">
         <h3>Any Question ?</h3>
         <p>Contact us via</p>
         <div class="email d-flex flex-column border-lg">
           <i class="fas fa-envelope text-center"></i>
           <a href="mailto:waysbucks.coffee@gmail.com" class="ms-2">
-            waysbucks.coffee@gmail.com
+            dn.coffee@gmail.com
           </a>
         </div>
         <div class="telp d-flex flex-column border-lg">

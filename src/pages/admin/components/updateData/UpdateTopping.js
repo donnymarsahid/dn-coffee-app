@@ -83,7 +83,7 @@ const UpdateTopping = () => {
 
   return (
     <>
-      <title>WaysBucks | Update Topping</title>
+      <title>DNcoffee | Update Topping</title>
       <section className="add-product">
         <div class="container">
           <div class="row">

@@ -60,7 +60,7 @@ const AllMenu = () => {
 
   return (
     <>
-      <title>WaysBucks | All Menu</title>
+      <title>DNcoffee | All Menu</title>
       <Navbar
         handleShowLogin={handleShowLogin}
         handleShowRegister={handleShowRegister}

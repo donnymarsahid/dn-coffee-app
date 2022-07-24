@@ -33,7 +33,7 @@ const Admin = (props) => {
 
   return (
     <>
-      <title>WaysBucks | Admin</title>
+      <title>DNcoffee | Admin</title>
       <section className="admin">
         <div class="container">
           <div class="row d-flex justify-content-between">
@@ -117,7 +117,7 @@ const Admin = (props) => {
               <div class="col-md-4 box box-users d-flex justify-content-between">
                 <div class="d-flex flex-column justify-content-between info">
                   <div className="title">
-                    <p class="text-uppercase m-0">Users WaysBucks</p>
+                    <p class="text-uppercase m-0">Users DNcoffee</p>
                     <p>Total : {users?.length - 1}</p>
                   </div>
                   <div class="check">

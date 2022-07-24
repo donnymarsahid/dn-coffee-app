@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../css/style.css";
 import { Link, useHistory } from "react-router-dom";
-import logoWaysBucks from "../../../assets/img/logo-waysbucks.svg";
+import logoDNcoffee from "../../../assets/img/logo-waysbucks.svg";
 import logout from "../../../assets/img/logout.svg";
 import user from "../../../assets/img/user.svg";
 import cartIcon from "../../../assets/img/cart.svg";
@@ -115,7 +115,7 @@ const Navbar = () => {
         <div className="container-navbar d-flex justify-content-between align-items-center">
           <div className="logo-brand">
             <Link to="/">
-              <img src={logoWaysBucks} alt="logo-waysbucks" />
+              <img src={logoDNcoffee} alt="logo-waysbucks" />
             </Link>
           </div>
           <div className="navbar-link pe-2">
